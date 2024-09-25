@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TestBalinasoft</string>
+    <string name="login">Login</string>
+    <string name="pass">Password</string>
+    <string name="reg">Register</string>
+    <string name="log_in">LOG IN</string>
+    <string name="sign_up">SIGN UP</string>
+</resources>
