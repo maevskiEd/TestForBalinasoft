@@ -18,6 +18,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import ed.maevski.testbalinasoft.R
 import ed.maevski.testbalinasoft.databinding.ActivityMainBinding
+import ed.maevski.testbalinasoft.domain.models.Photo
 import java.io.File
 import java.util.UUID
 
@@ -36,7 +37,10 @@ class MainActivity : AppCompatActivity() {
 
             if (succeed) {
                 println("launcherGetImageFromCamera: $imageUri")
-                imageUri?.let { binding.imgPhoto.setImageURI(it)}
+                imageUri?.let {
+                    val x = binding.imgPhoto.setImageURI(it)
+                    Photo(image = it.path.toString(),date = System.currentTimeMillis())
+                }
             }
         }
 
