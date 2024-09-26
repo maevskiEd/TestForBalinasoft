@@ -7,6 +7,8 @@ import ed.maevski.testbalinasoft.domain.usecases.SignUpUseCase
 import ed.maevski.testbalinasoft.view.auth.AuthViewModel
 import ed.maevski.testbalinasoft.view.auth.signin.SigninViewModel
 import ed.maevski.testbalinasoft.view.auth.signup.SignupViewModel
+import ed.maevski.testbalinasoft.view.map.MapViewModel
+import ed.maevski.testbalinasoft.view.photos.PhotosViewModel
 
 @Module
 class AppModule() {
@@ -27,5 +29,15 @@ class AppModule() {
         signUpUseCase: SignUpUseCase
     ) = SignupViewModel.Factory(
         signUpUseCase = signUpUseCase
+    )
+
+    @Provides
+    fun provideMapViewModelFactory(
+    ) = MapViewModel.Factory(
+    )
+
+    @Provides
+    fun providePhotosViewModelFactory(
+    ) = PhotosViewModel.Factory(
     )
 }

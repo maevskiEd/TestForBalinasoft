@@ -7,11 +7,11 @@
     <fragment
         android:id="@+id/nav_photos"
         android:name="ed.maevski.testbalinasoft.view.photos.PhotosFragment"
-        android:label="fragment_photos"
+        android:label=""
         tools:layout="@layout/fragment_photos" />
     <fragment
         android:id="@+id/nav_map"
         android:name="ed.maevski.testbalinasoft.view.map.MapFragment"
-        android:label="fragment_map"
+        android:label=""
         tools:layout="@layout/fragment_map" />
 </navigation>

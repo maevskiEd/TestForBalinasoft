@@ -1,8 +1,13 @@
 package ed.maevski.testbalinasoft.view
 
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.FileProvider
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -13,11 +18,27 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import ed.maevski.testbalinasoft.R
 import ed.maevski.testbalinasoft.databinding.ActivityMainBinding
+import java.io.File
+import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var imageUri: Uri
+
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private lateinit var binding: ActivityMainBinding
+
+    private val launcherGetImageFromCamera =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { succeed ->
+
+            println("launcherGetImageFromCamera: $succeed")
+
+            if (succeed) {
+                println("launcherGetImageFromCamera: $imageUri")
+                imageUri?.let { binding.imgPhoto.setImageURI(it)}
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +48,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.appBarMain.toolbar)
 
         binding.appBarMain.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
+
+            getImageFromCamera()
+
         }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
@@ -47,5 +68,16 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun getImageFromCamera() {
+        val file = File.createTempFile("${UUID.randomUUID()}", null, null).apply { deleteOnExit() }
+        imageUri = FileProvider.getUriForFile(
+            this,
+            this.packageName + ".fileprovider",
+            file
+        )
+        val imageFile = file
+        launcherGetImageFromCamera.launch(imageUri)
     }
 }
