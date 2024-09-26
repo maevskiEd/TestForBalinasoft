@@ -1,12 +1,18 @@
 package ed.maevski.testbalinasoft.view
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -14,6 +20,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import ed.maevski.testbalinasoft.R
@@ -25,6 +33,9 @@ import java.util.UUID
 class MainActivity : AppCompatActivity() {
 
     lateinit var imageUri: Uri
+    lateinit var photo: Photo
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -36,10 +47,21 @@ class MainActivity : AppCompatActivity() {
             println("launcherGetImageFromCamera: $succeed")
 
             if (succeed) {
+
+//                val geoData = getLastLocation()
+
                 println("launcherGetImageFromCamera: $imageUri")
                 imageUri?.let {
-                    val x = binding.imgPhoto.setImageURI(it)
-                    Photo(image = it.path.toString(),date = System.currentTimeMillis())
+                    binding.imgPhoto.setImageURI(it)
+                    val inputStream = contentResolver.openInputStream(it)
+                    val data = inputStream?.readBytes() // Читаем байты, если поток не null
+                    inputStream?.close() // Закрываем поток
+                    if (data != null) {
+//                        println("launcherGetImageFromCamera: ${data.toString(Charsets.UTF_8)}")
+                    }
+
+                    println("launcherGetImageFromCamera: $photo")
+
                 }
             }
         }
@@ -49,11 +71,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
         setSupportActionBar(binding.appBarMain.toolbar)
 
         binding.appBarMain.fab.setOnClickListener { view ->
 
-            getImageFromCamera()
+            getLastLocation()
+//            getImageFromCamera()
 
         }
         val drawerLayout: DrawerLayout = binding.drawerLayout
@@ -74,7 +99,7 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    private fun getImageFromCamera() {
+    private fun getImageFromCamera(lat: Double? = null, lng: Double? = null) {
         val file = File.createTempFile("${UUID.randomUUID()}", null, null).apply { deleteOnExit() }
         imageUri = FileProvider.getUriForFile(
             this,
@@ -82,6 +107,62 @@ class MainActivity : AppCompatActivity() {
             file
         )
         val imageFile = file
+        photo = Photo(
+            uri = imageUri,
+            date = System.currentTimeMillis(),
+            lat = lat,
+            lng = lng
+        )
         launcherGetImageFromCamera.launch(imageUri)
+
     }
+
+    private fun getLastLocation() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location: Location? ->
+                    location?.let {
+                        // Координаты успешно получены
+                        val latitude = it.latitude
+                        val longitude = it.longitude
+                        Log.d("MainActivity", "Широта: $latitude, Долгота: $longitude")
+                        getImageFromCamera(latitude, longitude)
+                    } ?: run {
+                        Log.e("MainActivity", "Не удалось получить местоположение")
+                        getImageFromCamera()
+                    }
+                }
+        } else {
+            // Запрашиваем разрешения у пользователя
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSION_REQUEST_CODE
+            )
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                getLastLocation()
+            } else {
+                Log.e("MainActivity", "Разрешение на доступ к местоположению не предоставлено")
+            }
+        }
+    }
+
+    companion object {
+        private val LOCATION_PERMISSION_REQUEST_CODE = 423
+    }
+
 }
