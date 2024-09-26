@@ -12,6 +12,6 @@ class SharedPreferencesModule {
         context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE)
 
     companion object {
-        const val SHARED_PREFERENCES = "igotit_settings"
+        const val SHARED_PREFERENCES = "settings"
     }
 }

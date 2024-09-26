@@ -5,16 +5,16 @@ import androidx.lifecycle.ViewModelProvider
 
 class AuthViewModel : ViewModel() {
 
-    class Factory(
+//    class Factory(
 
-        ) : ViewModelProvider.Factory {
-
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(AuthViewModel::class.java)) {
-                return AuthViewModel(
-                ) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
+//        ) : ViewModelProvider.Factory {
+//
+//        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//            if (modelClass.isAssignableFrom(AuthViewModel::class.java)) {
+//                return AuthViewModel(
+//                ) as T
+//            }
+//            throw IllegalArgumentException("Unknown ViewModel class")
+//        }
+//    }
 }

@@ -8,38 +8,6 @@
     android:background="@color/white"
     tools:context=".view.auth.AuthFragment">
 
-    <!--    <androidx.viewpager.widget.ViewPager-->
-    <!--        android:id="@+id/pager"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent">-->
-
-    <!--            <com.google.android.material.tabs.TabLayout-->
-    <!--                android:id="@+id/tabs_auth"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                app:layout_constraintTop_toTopOf="parent"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:tabBackground="@color/green"-->
-    <!--                app:tabIndicatorColor="@color/white"-->
-    <!--                app:tabTextColor="@color/white"-->
-    <!--                app:tabIndicatorFullWidth="true"-->
-    <!--                app:tabIndicatorHeight="4dp"-->
-    <!--                app:tabMode="fixed">-->
-
-    <!--                <com.google.android.material.tabs.TabItem-->
-    <!--                    android:layout_width="match_parent"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    tools:text="@string/login" />-->
-
-    <!--                <com.google.android.material.tabs.TabItem-->
-    <!--                    android:layout_width="match_parent"-->
-    <!--                    android:layout_height="wrap_content"-->
-    <!--                    tools:text="@string/reg" />-->
-    <!--            </com.google.android.material.tabs.TabLayout>-->
-
-    <!--    </androidx.viewpager.widget.ViewPager>-->
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs_auth"
         android:layout_width="match_parent"

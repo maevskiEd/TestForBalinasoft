@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.android.support.AndroidSupportInjection
 import ed.maevski.testbalinasoft.R
@@ -14,7 +13,6 @@ import ed.maevski.testbalinasoft.databinding.FragmentAuthBinding
 import ed.maevski.testbalinasoft.view.auth.signin.SigninFragment
 import ed.maevski.testbalinasoft.view.auth.signup.SignupFragment
 import ed.maevski.testbalinasoft.view.base.BaseViewPagerAdapter
-import javax.inject.Inject
 
 class AuthFragment : Fragment() {
     private var _binding: FragmentAuthBinding? = null
@@ -22,8 +20,8 @@ class AuthFragment : Fragment() {
 
     private lateinit var viewModel: AuthViewModel
 
-    @Inject
-    lateinit var vmFactory: AuthViewModel.Factory
+//    @Inject
+//    lateinit var vmFactory: AuthViewModel.Factory
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -41,8 +39,8 @@ class AuthFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel =
-            ViewModelProvider(this, vmFactory)[AuthViewModel::class.java]
+//        viewModel =
+//            ViewModelProvider(this, vmFactory)[AuthViewModel::class.java]
 
         addViewPager()
     }

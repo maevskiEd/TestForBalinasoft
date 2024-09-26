@@ -3,6 +3,7 @@ package ed.maevski.testbalinasoft.di.modules
 import com.skydoves.retrofit.adapters.result.ResultCallAdapterFactory
 import dagger.Module
 import dagger.Provides
+import ed.maevski.testbalinasoft.data.api.UserApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -37,8 +38,12 @@ class RemoteModule {
         .client(okHttpClient)
         .build()
 
+    @Provides
+    @Singleton
+    fun provideAuthApi(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)
+
     companion object {
         private const val HALF_MINUTE_FOR_SLOW_INTERNET = 30L
-        const val BASE_URL = "https://junior.balinasoft.com/v2/api-docs?group=api1"
+        const val BASE_URL = "https://junior.balinasoft.com/"
     }
 }
