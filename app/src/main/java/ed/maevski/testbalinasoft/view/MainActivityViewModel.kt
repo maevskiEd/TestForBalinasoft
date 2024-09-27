@@ -3,14 +3,17 @@ package ed.maevski.testbalinasoft.view
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import ed.maevski.testbalinasoft.domain.models.Image
 import ed.maevski.testbalinasoft.domain.usecases.GetUserNameFromStorageUseCase
+import ed.maevski.testbalinasoft.domain.usecases.SaveImageUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 class MainActivityViewModel(
-    private val getUserNameFromStorageUseCase: GetUserNameFromStorageUseCase
+    private val getUserNameFromStorageUseCase: GetUserNameFromStorageUseCase,
+    private val saveImageUseCase: SaveImageUseCase
 ) : ViewModel() {
     private val _userName = MutableSharedFlow<String>()
     val userName: SharedFlow<String>
@@ -23,14 +26,22 @@ class MainActivityViewModel(
         }
     }
 
+    fun saveImageToDb(image: Image) {
+        viewModelScope.launch {
+            saveImageUseCase(image)
+        }
+    }
+
     class Factory(
-        private val getUserNameFromStorageUseCase: GetUserNameFromStorageUseCase
+        private val getUserNameFromStorageUseCase: GetUserNameFromStorageUseCase,
+        private val saveImageUseCase: SaveImageUseCase
     ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(MainActivityViewModel::class.java)) {
                 return MainActivityViewModel(
-                    getUserNameFromStorageUseCase = getUserNameFromStorageUseCase
+                    getUserNameFromStorageUseCase = getUserNameFromStorageUseCase,
+                    saveImageUseCase = saveImageUseCase
                 ) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")

@@ -9,7 +9,7 @@ import ed.maevski.testbalinasoft.data.cache.entity.ImageEntity
 @Dao
 interface ImagesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun save()
+    fun save(imageEntity: ImageEntity)
 
     @Query("DELETE FROM IMAGES WHERE id = :id")
     fun del(id: Int)

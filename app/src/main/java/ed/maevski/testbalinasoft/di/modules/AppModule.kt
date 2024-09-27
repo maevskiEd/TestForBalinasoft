@@ -3,6 +3,7 @@ package ed.maevski.testbalinasoft.di.modules
 import dagger.Module
 import dagger.Provides
 import ed.maevski.testbalinasoft.domain.usecases.GetUserNameFromStorageUseCase
+import ed.maevski.testbalinasoft.domain.usecases.SaveImageUseCase
 import ed.maevski.testbalinasoft.domain.usecases.SignInUseCase
 import ed.maevski.testbalinasoft.domain.usecases.SignUpUseCase
 import ed.maevski.testbalinasoft.view.MainActivityViewModel
@@ -21,10 +22,11 @@ class AppModule() {
 
     @Provides
     fun provideMainActivityViewModelFactory(
-        getUserNameFromStorageUseCase: GetUserNameFromStorageUseCase
+        getUserNameFromStorageUseCase: GetUserNameFromStorageUseCase,
+        saveImageUseCase: SaveImageUseCase
     ) = MainActivityViewModel.Factory(
-        getUserNameFromStorageUseCase = getUserNameFromStorageUseCase
-
+        getUserNameFromStorageUseCase = getUserNameFromStorageUseCase,
+        saveImageUseCase = saveImageUseCase
     )
 
     @Provides

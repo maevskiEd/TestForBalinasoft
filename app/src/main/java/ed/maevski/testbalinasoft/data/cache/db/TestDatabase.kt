@@ -11,5 +11,5 @@ import ed.maevski.testbalinasoft.data.cache.entity.ImageEntity
     exportSchema = false
 )
 abstract class TestDatabase : RoomDatabase() {
-    abstract fun meetingDao(): ImagesDao
+    abstract fun imagesDao(): ImagesDao
 }

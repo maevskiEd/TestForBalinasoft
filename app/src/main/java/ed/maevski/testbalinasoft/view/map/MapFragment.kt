@@ -25,9 +25,9 @@ class MapFragment : Fragment() {
 
     private val callback = OnMapReadyCallback { googleMap ->
 
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val me = LatLng(52.4667476, 23.7326704)
+        googleMap.addMarker(MarkerOptions().position(me).title("Marker in Sydney"))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(me))
         googleMap.uiSettings.isZoomControlsEnabled = true
         googleMap.uiSettings.isMapToolbarEnabled = true
     }

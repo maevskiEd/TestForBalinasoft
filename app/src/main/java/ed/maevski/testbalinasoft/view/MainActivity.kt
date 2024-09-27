@@ -35,7 +35,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     lateinit var imageUri: Uri
-    lateinit var photo: Image
+    lateinit var image: Image
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -64,7 +64,8 @@ class MainActivity : AppCompatActivity() {
 //                        println("launcherGetImageFromCamera: ${data.toString(Charsets.UTF_8)}")
                     }
 
-                    println("launcherGetImageFromCamera: $photo")
+                    println("launcherGetImageFromCamera: $image")
+                    mainActivityViewModel.saveImageToDb(image)
 
                 }
             }
@@ -126,7 +127,7 @@ class MainActivity : AppCompatActivity() {
             file
         )
         val imageFile = file
-        photo = Image(
+        image = Image(
             uri = imageUri,
             date = System.currentTimeMillis(),
             lat = lat,
