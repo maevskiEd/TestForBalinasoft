@@ -18,6 +18,13 @@ class ImageRepository(
         return true
     }
 
+    override suspend fun getImages(): List<Image> {
+        val images = withContext(Dispatchers.IO) {
+            imagesDao.getImages()
+        }
+        return images
+    }
+
     private fun mapperImageToImageEntity(image: Image): ImageEntity {
         return ImageEntity(
             uri = image.uri.path,

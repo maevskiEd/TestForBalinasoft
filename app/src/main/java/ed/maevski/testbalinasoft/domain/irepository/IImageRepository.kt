@@ -4,4 +4,5 @@ import ed.maevski.testbalinasoft.domain.models.Image
 
 interface IImageRepository {
     suspend fun save(image: Image): Boolean
+    suspend fun getImages(): List<Image>
 }

@@ -15,6 +15,6 @@ interface ImagesDao {
     fun del(id: Int)
 
     @Query("SELECT * FROM IMAGES")
-    fun getAll(): List<ImageEntity>
+    fun getImages(): List<ImageEntity>
 
 }

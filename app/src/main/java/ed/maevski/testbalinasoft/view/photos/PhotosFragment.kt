@@ -12,6 +12,8 @@ import ed.maevski.testbalinasoft.databinding.FragmentPhotosBinding
 import javax.inject.Inject
 
 class PhotosFragment : Fragment() {
+    private val imageAdapter = ImageAdapter()
+
     private var _binding: FragmentPhotosBinding? = null
     private val binding get() = _binding!!
 
@@ -38,5 +40,8 @@ class PhotosFragment : Fragment() {
 
         viewModel =
             ViewModelProvider(this, vmFactory)[PhotosViewModel::class.java]
+
+        binding.rvImages.adapter = imageAdapter
+
     }
 }
