@@ -18,7 +18,6 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-    //Внедряем все модули, нужные для этого компонента
     modules = [
         AndroidInjectionModule::class,
         MainModule::class,

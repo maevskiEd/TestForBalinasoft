@@ -2,8 +2,10 @@ package ed.maevski.testbalinasoft.di.modules
 
 import dagger.Module
 import dagger.Provides
+import ed.maevski.testbalinasoft.domain.usecases.GetUserNameFromStorageUseCase
 import ed.maevski.testbalinasoft.domain.usecases.SignInUseCase
 import ed.maevski.testbalinasoft.domain.usecases.SignUpUseCase
+import ed.maevski.testbalinasoft.view.MainActivityViewModel
 import ed.maevski.testbalinasoft.view.auth.AuthViewModel
 import ed.maevski.testbalinasoft.view.auth.signin.SigninViewModel
 import ed.maevski.testbalinasoft.view.auth.signup.SignupViewModel
@@ -16,6 +18,14 @@ class AppModule() {
 //    fun provideAuthViewModelFactory(
 //    ) = AuthViewModel.Factory(
 //    )
+
+    @Provides
+    fun provideMainActivityViewModelFactory(
+        getUserNameFromStorageUseCase: GetUserNameFromStorageUseCase
+    ) = MainActivityViewModel.Factory(
+        getUserNameFromStorageUseCase = getUserNameFromStorageUseCase
+
+    )
 
     @Provides
     fun provideSigninViewModelFactory(

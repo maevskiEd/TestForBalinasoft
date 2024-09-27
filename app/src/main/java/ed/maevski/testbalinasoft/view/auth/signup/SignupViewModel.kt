@@ -19,7 +19,7 @@ class SignupViewModel(private val signUpUseCase: SignUpUseCase) : ViewModel() {
 
         viewModelScope.launch {
             /*** На время разработки пропускаем пустую строку*/
-            if (user.login.isEmpty()) {
+            if (user.login?.isEmpty() == true) {
                 _isSubmit.emit(true)
             } else {
                 val result = signUpUseCase(user)

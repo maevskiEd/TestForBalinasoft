@@ -1,20 +1,20 @@
 package ed.maevski.testbalinasoft.view
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -23,17 +23,19 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
+import dagger.android.AndroidInjection
 import ed.maevski.testbalinasoft.R
 import ed.maevski.testbalinasoft.databinding.ActivityMainBinding
-import ed.maevski.testbalinasoft.domain.models.Photo
+import ed.maevski.testbalinasoft.domain.models.Image
+import kotlinx.coroutines.launch
 import java.io.File
 import java.util.UUID
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var imageUri: Uri
-    lateinit var photo: Photo
+    lateinit var photo: Image
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -41,14 +43,16 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private lateinit var mainActivityViewModel: MainActivityViewModel
+    @Inject
+    lateinit var vmFactory: MainActivityViewModel.Factory
+
     private val launcherGetImageFromCamera =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { succeed ->
 
             println("launcherGetImageFromCamera: $succeed")
 
             if (succeed) {
-
-//                val geoData = getLastLocation()
 
                 println("launcherGetImageFromCamera: $imageUri")
                 imageUri?.let {
@@ -67,9 +71,14 @@ class MainActivity : AppCompatActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        mainActivityViewModel =
+            ViewModelProvider(this, vmFactory)[MainActivityViewModel::class.java]
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -78,9 +87,9 @@ class MainActivity : AppCompatActivity() {
         binding.appBarMain.fab.setOnClickListener { view ->
 
             getLastLocation()
-//            getImageFromCamera()
 
         }
+
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -92,6 +101,16 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        lifecycleScope.launch {
+            mainActivityViewModel.userName.collect {userName ->
+                val headerView = binding.navView.getHeaderView(0)
+                val textView: TextView = headerView.findViewById(R.id.textView)
+                textView.text = userName
+            }
+        }
+
+        mainActivityViewModel.getUserName()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -107,7 +126,7 @@ class MainActivity : AppCompatActivity() {
             file
         )
         val imageFile = file
-        photo = Photo(
+        photo = Image(
             uri = imageUri,
             date = System.currentTimeMillis(),
             lat = lat,

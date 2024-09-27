@@ -1,17 +1,20 @@
 package ed.maevski.testbalinasoft.view.map
 
 import android.content.Context
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import dagger.android.support.AndroidSupportInjection
 import ed.maevski.testbalinasoft.R
 import ed.maevski.testbalinasoft.databinding.FragmentMapBinding
-import ed.maevski.testbalinasoft.view.photos.PhotosViewModel
 import javax.inject.Inject
 
 class MapFragment : Fragment() {
@@ -19,6 +22,15 @@ class MapFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewModel: MapViewModel
+
+    private val callback = OnMapReadyCallback { googleMap ->
+
+        val sydney = LatLng(-34.0, 151.0)
+        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        googleMap.uiSettings.isZoomControlsEnabled = true
+        googleMap.uiSettings.isMapToolbarEnabled = true
+    }
 
     @Inject
     lateinit var vmFactory: MapViewModel.Factory
@@ -41,5 +53,8 @@ class MapFragment : Fragment() {
 
         viewModel =
             ViewModelProvider(this, vmFactory)[MapViewModel::class.java]
+
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        mapFragment?.getMapAsync(callback)
     }
 }

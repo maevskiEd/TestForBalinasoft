@@ -17,6 +17,5 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:fontFamily="sans-serif"
-        android:textStyle="bold"
-        android:text="Username" />
+        android:textStyle="bold"/>
 </LinearLayout>

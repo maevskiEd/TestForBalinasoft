@@ -2,7 +2,7 @@ package ed.maevski.testbalinasoft.domain.models
 
 import android.net.Uri
 
-data class Photo(
+data class Image(
     val uri: Uri,
     val date: Long,
     val lat: Double? = null,

@@ -17,7 +17,6 @@ class RemoteModule {
     @Provides
     @Singleton
     fun provideTestOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
-        //Настраиваем таймауты для медленного интернета
         .callTimeout(HALF_MINUTE_FOR_SLOW_INTERNET, TimeUnit.SECONDS)
         .readTimeout(HALF_MINUTE_FOR_SLOW_INTERNET, TimeUnit.SECONDS)
         .addInterceptor(
@@ -29,12 +28,9 @@ class RemoteModule {
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        //Указываем базовый URL из констант
         .baseUrl(BASE_URL)
-        //Добавляем конвертер
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(ResultCallAdapterFactory.create())
-        //Добавляем кастомный клиент
         .client(okHttpClient)
         .build()
 
