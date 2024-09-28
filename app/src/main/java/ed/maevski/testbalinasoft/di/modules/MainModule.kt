@@ -7,6 +7,7 @@ import ed.maevski.testbalinasoft.view.MainActivity
 import ed.maevski.testbalinasoft.view.auth.AuthFragment
 import ed.maevski.testbalinasoft.view.auth.signin.SigninFragment
 import ed.maevski.testbalinasoft.view.auth.signup.SignupFragment
+import ed.maevski.testbalinasoft.view.imagedetail.ImageDetailFragment
 import ed.maevski.testbalinasoft.view.map.MapFragment
 import ed.maevski.testbalinasoft.view.photos.PhotosFragment
 
@@ -26,5 +27,7 @@ interface MainModule {
     fun bindMapFragment(): MapFragment
     @ContributesAndroidInjector
     fun bindPhotosFragment(): PhotosFragment
+    @ContributesAndroidInjector
+    fun bindImageDetailFragment(): ImageDetailFragment
 
 }

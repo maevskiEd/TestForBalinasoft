@@ -14,4 +14,8 @@
         android:name="ed.maevski.testbalinasoft.view.map.MapFragment"
         android:label=""
         tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/imageDetailFragment"
+        android:name="ed.maevski.testbalinasoft.view.imagedetail.ImageDetailFragment"
+        android:label="ImageDetailFragment" />
 </navigation>

@@ -13,9 +13,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.NavHostFragment.Companion
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -39,6 +43,14 @@ class MainActivity : AppCompatActivity() {
     lateinit var imageUri: Uri
     lateinit var image: Image
 
+    private val fragmentsWithoutSwitch = listOf(
+        R.id.imageDetailFragment,
+    )
+
+    private val navController by lazy {
+        NavHostFragment.findNavController(supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment)
+    }
+
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -58,14 +70,6 @@ class MainActivity : AppCompatActivity() {
 
                 println("launcherGetImageFromCamera: $imageUri")
                 imageUri.let {
-            //                    binding.imgPhoto.setImageURI(it)
-            //                    val inputStream = contentResolver.openInputStream(it)
-            //                    val data = inputStream?.readBytes() // Читаем байты, если поток не null
-            //                    inputStream?.close() // Закрываем поток
-            //                    if (data != null) {
-            ////                        println("launcherGetImageFromCamera: ${data.toString(Charsets.UTF_8)}")
-            //                    }
-
                     println("launcherGetImageFromCamera: $image")
 //                    mainActivityViewModel.saveImageToDb(image)
                     mainActivityViewModel.upload(image)
@@ -95,7 +99,7 @@ class MainActivity : AppCompatActivity() {
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+//        val navController = findNavController(R.id.nav_host_fragment_content_main)
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -104,6 +108,8 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        initShowOrHideSwitch()
 
         lifecycleScope.launch {
             mainActivityViewModel.userName.collect {userName ->
@@ -114,15 +120,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launch {
-            mainActivityViewModel.isDbUpdating.collect {
+            mainActivityViewModel.uriString.collect {
 
-                println("mainActivityViewModel.isDbUpdating.collect it = $it")
+                println("mainActivityViewModel.uriString.collect it = $it")
 
-                if (it) {
+                val bundle = Bundle()
+                bundle.putString("file_uri", it)
+                navController.navigate(R.id.imageDetailFragment, bundle)
 
-                    val fragment = supportFragmentManager.findFragmentById(R.id.nav_photos)
-                    println("fragment = $fragment")
-                }
             }
         }
 
@@ -192,6 +197,22 @@ class MainActivity : AppCompatActivity() {
 //                getLastLocation()
             } else {
                 Log.e("MainActivity", "Разрешение на доступ к местоположению не предоставлено")
+            }
+        }
+    }
+
+    private fun initShowOrHideSwitch() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                navController.addOnDestinationChangedListener { _, destination, _ ->
+                    with(binding) {
+                        if (fragmentsWithoutSwitch.contains(destination.id)) {
+                            appBarMain.fab.hide()
+                        } else {
+                            appBarMain.fab.show()
+                        }
+                    }
+                }
             }
         }
     }

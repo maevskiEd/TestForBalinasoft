@@ -8,14 +8,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import dagger.android.support.AndroidSupportInjection
+import ed.maevski.testbalinasoft.R
 import ed.maevski.testbalinasoft.databinding.FragmentPhotosBinding
 import ed.maevski.testbalinasoft.domain.models.Image
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PhotosFragment : Fragment() {
-    private val imageAdapter = ImageAdapter()
+    private val imageAdapter = ImageAdapter() { uri ->
+
+        val bundle = Bundle()
+        bundle.putString("file_uri", uri)
+        findNavController().navigate(R.id.imageDetailFragment, bundle)
+
+    }
 
     private var _binding: FragmentPhotosBinding? = null
     private val binding get() = _binding!!

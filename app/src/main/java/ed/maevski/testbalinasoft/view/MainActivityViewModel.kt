@@ -25,6 +25,10 @@ class MainActivityViewModel(
     val isDbUpdating: SharedFlow<Boolean>
         get() = _isDbUpdating.asSharedFlow()
 
+    private var _uriString = MutableSharedFlow<String>()
+    val uriString: SharedFlow<String>
+        get() = _uriString.asSharedFlow()
+
     fun getUserName() {
         viewModelScope.launch {
             val name = getUserNameFromStorageUseCase()
@@ -51,7 +55,7 @@ class MainActivityViewModel(
             if (uploadImageUseCase(image)) {
                 println("uploadImageUseCase -> true")
 
-                _isDbUpdating.emit(true)
+                _uriString.emit(image.uri.toString())
             }
         }
     }
