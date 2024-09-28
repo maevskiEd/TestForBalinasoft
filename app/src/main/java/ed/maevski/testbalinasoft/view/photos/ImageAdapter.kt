@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ed.maevski.testbalinasoft.databinding.ItemImageBinding
 import ed.maevski.testbalinasoft.domain.models.Image
+import ed.maevski.testbalinasoft.utils.toTextDateByFormat
 
 class ImageAdapter(
 //    private val onImgClick: (id: Int) -> Unit,
@@ -34,20 +35,15 @@ class ImageAdapter(
             .centerCrop()
             .into(holder.image)
 
-        holder.date.text = images[position].date.toString()
-
-//        holder.imgLeftHalf.setOnLongClickListener {
-//            onImgClick(leftHalf[position].id)
-//            true
-//        }
+        holder.date.text = images[position].date.toTextDateByFormat("yyyy-MM-dd")
     }
 
     override fun getItemCount(): Int = images.size
 
-    fun getItem(position: Int?): Image? {
-        return if (position == null) null
-        else images[position]
-    }
+//    fun getItem(position: Int?): Image? {
+//        return if (position == null) null
+//        else images[position]
+//    }
 
     @SuppressLint("NotifyDataSetChanged")
     fun setData(images: List<Image>) {

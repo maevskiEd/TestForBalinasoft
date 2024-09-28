@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import ed.maevski.testbalinasoft.data.cache.entity.ImageEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ImagesDao {

@@ -27,6 +27,8 @@ import dagger.android.AndroidInjection
 import ed.maevski.testbalinasoft.R
 import ed.maevski.testbalinasoft.databinding.ActivityMainBinding
 import ed.maevski.testbalinasoft.domain.models.Image
+import ed.maevski.testbalinasoft.view.auth.AuthFragment
+import ed.maevski.testbalinasoft.view.photos.PhotosFragment
 import kotlinx.coroutines.launch
 import java.io.File
 import java.util.UUID
@@ -55,18 +57,18 @@ class MainActivity : AppCompatActivity() {
             if (succeed) {
 
                 println("launcherGetImageFromCamera: $imageUri")
-                imageUri?.let {
-                    binding.imgPhoto.setImageURI(it)
-                    val inputStream = contentResolver.openInputStream(it)
-                    val data = inputStream?.readBytes() // Читаем байты, если поток не null
-                    inputStream?.close() // Закрываем поток
-                    if (data != null) {
-//                        println("launcherGetImageFromCamera: ${data.toString(Charsets.UTF_8)}")
-                    }
+                imageUri.let {
+            //                    binding.imgPhoto.setImageURI(it)
+            //                    val inputStream = contentResolver.openInputStream(it)
+            //                    val data = inputStream?.readBytes() // Читаем байты, если поток не null
+            //                    inputStream?.close() // Закрываем поток
+            //                    if (data != null) {
+            ////                        println("launcherGetImageFromCamera: ${data.toString(Charsets.UTF_8)}")
+            //                    }
 
                     println("launcherGetImageFromCamera: $image")
-                    mainActivityViewModel.saveImageToDb(image)
-
+//                    mainActivityViewModel.saveImageToDb(image)
+                    mainActivityViewModel.upload(image)
                 }
             }
         }
@@ -108,6 +110,19 @@ class MainActivity : AppCompatActivity() {
                 val headerView = binding.navView.getHeaderView(0)
                 val textView: TextView = headerView.findViewById(R.id.textView)
                 textView.text = userName
+            }
+        }
+
+        lifecycleScope.launch {
+            mainActivityViewModel.isDbUpdating.collect {
+
+                println("mainActivityViewModel.isDbUpdating.collect it = $it")
+
+                if (it) {
+
+                    val fragment = supportFragmentManager.findFragmentById(R.id.nav_photos)
+                    println("fragment = $fragment")
+                }
             }
         }
 

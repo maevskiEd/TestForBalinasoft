@@ -3,6 +3,7 @@ package ed.maevski.testbalinasoft.di.modules
 import com.skydoves.retrofit.adapters.result.ResultCallAdapterFactory
 import dagger.Module
 import dagger.Provides
+import ed.maevski.testbalinasoft.data.api.ImageApi
 import ed.maevski.testbalinasoft.data.api.UserApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -37,6 +38,10 @@ class RemoteModule {
     @Provides
     @Singleton
     fun provideAuthApi(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideImageApi(retrofit: Retrofit): ImageApi = retrofit.create(ImageApi::class.java)
 
     companion object {
         private const val HALF_MINUTE_FOR_SLOW_INTERNET = 30L

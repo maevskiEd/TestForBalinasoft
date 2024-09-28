@@ -10,8 +10,9 @@ class ImageStorage @Inject constructor(
 ) : IImageStorage {
     override fun get(uri: Uri): ByteArray? {
         val inputStream = context.contentResolver.openInputStream(uri)
-        val data = inputStream?.readBytes()
-        inputStream?.close()
+//        val data = inputStream?.readBytes()
+//        inputStream?.close()
+        val data = inputStream?.use { it.readBytes() }
         return data
     }
 }

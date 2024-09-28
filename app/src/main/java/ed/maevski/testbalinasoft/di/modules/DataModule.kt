@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
+import ed.maevski.testbalinasoft.data.api.ImageApi
 import ed.maevski.testbalinasoft.data.api.UserApi
 import ed.maevski.testbalinasoft.data.cache.dao.ImagesDao
 import ed.maevski.testbalinasoft.data.repository.ImageRepository
@@ -22,8 +23,18 @@ import javax.inject.Singleton
 class DataModule {
     @Provides
     @Singleton
-    fun provideImageRepository(imagesDao: ImagesDao) : IImageRepository {
-        return ImageRepository(imagesDao = imagesDao)
+    fun provideImageRepository(
+        imagesDao: ImagesDao,
+        imageApi: ImageApi,
+        tokenStorage: TokenStorage,
+        imageStorage: ImageStorage,
+        ) : IImageRepository {
+        return ImageRepository(
+            imagesDao = imagesDao,
+            imageApi = imageApi,
+            tokenStorage = tokenStorage,
+            imageStorage = imageStorage,
+            )
     }
 
     @Provides

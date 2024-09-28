@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import ed.maevski.testbalinasoft.domain.models.Image
 import ed.maevski.testbalinasoft.domain.usecases.GetUserNameFromStorageUseCase
-import ed.maevski.testbalinasoft.domain.usecases.SaveImageUseCase
+import ed.maevski.testbalinasoft.domain.usecases.SaveImageToDbUseCase
+import ed.maevski.testbalinasoft.domain.usecases.UploadImageUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -13,11 +14,16 @@ import kotlinx.coroutines.launch
 
 class MainActivityViewModel(
     private val getUserNameFromStorageUseCase: GetUserNameFromStorageUseCase,
-    private val saveImageUseCase: SaveImageUseCase
+    private val saveImageUseCase: SaveImageToDbUseCase,
+    private val uploadImageUseCase: UploadImageUseCase,
 ) : ViewModel() {
     private val _userName = MutableSharedFlow<String>()
     val userName: SharedFlow<String>
         get() = _userName.asSharedFlow()
+
+    private var _isDbUpdating = MutableSharedFlow<Boolean>()
+    val isDbUpdating: SharedFlow<Boolean>
+        get() = _isDbUpdating.asSharedFlow()
 
     fun getUserName() {
         viewModelScope.launch {
@@ -28,20 +34,42 @@ class MainActivityViewModel(
 
     fun saveImageToDb(image: Image) {
         viewModelScope.launch {
-            saveImageUseCase(image)
+            println("saveImageToDb")
+
+            if (saveImageUseCase(image)) {
+                println("saveImageToDb -> true")
+
+                _isDbUpdating.emit(true)
+            }
         }
     }
 
+    fun upload(image: Image) {
+        viewModelScope.launch {
+            println("uploadImageUseCase")
+
+            if (uploadImageUseCase(image)) {
+                println("uploadImageUseCase -> true")
+
+                _isDbUpdating.emit(true)
+            }
+        }
+    }
+
+
+
     class Factory(
         private val getUserNameFromStorageUseCase: GetUserNameFromStorageUseCase,
-        private val saveImageUseCase: SaveImageUseCase
+        private val saveImageUseCase: SaveImageToDbUseCase,
+        private val uploadImageUseCase: UploadImageUseCase,
     ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(MainActivityViewModel::class.java)) {
                 return MainActivityViewModel(
                     getUserNameFromStorageUseCase = getUserNameFromStorageUseCase,
-                    saveImageUseCase = saveImageUseCase
+                    saveImageUseCase = saveImageUseCase,
+                    uploadImageUseCase = uploadImageUseCase,
                 ) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")

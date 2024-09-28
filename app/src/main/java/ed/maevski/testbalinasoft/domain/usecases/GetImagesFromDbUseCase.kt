@@ -8,7 +8,7 @@ class GetImagesFromDbUseCase(
 ) {
 
     suspend operator fun invoke(): List<Image> {
-        val result = repository.save()
+        val result = repository.getImages()
         return result
     }
 }
