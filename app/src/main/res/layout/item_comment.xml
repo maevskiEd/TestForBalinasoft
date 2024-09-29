@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/categoryCV"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="2dp"
-    app:cardBackgroundColor="@color/blue_card_dark">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <TextView
-        android:id="@+id/categoryCVText"
+        android:id="@+id/tv_comment_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:textSize="12sp"
-        android:gravity="center"
-        android:text=""/>
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-</androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/tv_comment_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_comment_text"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

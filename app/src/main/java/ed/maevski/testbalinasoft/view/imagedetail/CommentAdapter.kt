@@ -5,44 +5,42 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import ed.maevski.testbalinasoft.databinding.ItemCommentBinding
 import ed.maevski.testbalinasoft.databinding.ItemImageBinding
+import ed.maevski.testbalinasoft.domain.models.Comment
 import ed.maevski.testbalinasoft.domain.models.Image
 import ed.maevski.testbalinasoft.utils.toTextDateByFormat
 
 class CommentAdapter(
-    private val onImgClick: (uri: String) -> Unit,
-) : RecyclerView.Adapter<CommentAdapter.InnerImageViewHolder>() {
-    private var images: MutableList<Image> = mutableListOf()
+    private val onLongClick: (commentId: Long) -> Unit,
+) : RecyclerView.Adapter<CommentAdapter.InnerCommentViewHolder>() {
+    private var comments: MutableList<Comment> = mutableListOf()
 
-    inner class InnerImageViewHolder(binding: ItemImageBinding) :
+    inner class InnerCommentViewHolder(binding: ItemCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        var root = binding.itemContainer
-        var image = binding.image
-        var date = binding.date
+        var root = binding.root
+        var text = binding.tvCommentText
+        var date = binding.tvCommentDate
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InnerImageViewHolder {
-        val binding = ItemImageBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InnerCommentViewHolder {
+        val binding = ItemCommentBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
-        return InnerImageViewHolder(binding)
+        return InnerCommentViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: InnerImageViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: InnerCommentViewHolder, position: Int) {
 
-        Glide.with(holder.root)
-            .load(images[position].uri)
-            .centerCrop()
-            .into(holder.image)
+        holder.text.text = comments[position].text
+        holder.date.text = comments[position].date.toTextDateByFormat("yyyy-MM-dd")
 
-        holder.date.text = images[position].date.toTextDateByFormat("yyyy-MM-dd")
-
-        holder.image.setOnClickListener {
-            onImgClick(images[position].uri.toString())
+        holder.root.setOnClickListener {
+            comments[position].commentId?.let { id -> onLongClick(id) }
         }
     }
 
-    override fun getItemCount(): Int = images.size
+    override fun getItemCount(): Int = comments.size
 
 //    fun getItem(position: Int?): Image? {
 //        return if (position == null) null
@@ -50,8 +48,8 @@ class CommentAdapter(
 //    }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(images: List<Image>) {
-        this.images = images.toMutableList()
+    fun setData(images: List<Comment>) {
+        this.comments = images.toMutableList()
         notifyDataSetChanged()
     }
 }
