@@ -7,10 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import dagger.android.support.AndroidSupportInjection
+import ed.maevski.testbalinasoft.R
 import ed.maevski.testbalinasoft.databinding.FragmentImageDetailBinding
+import ed.maevski.testbalinasoft.view.photos.ImageAdapter
 
 class ImageDetailFragment : Fragment() {
+    private val commentAdapter = CommentAdapter() { uri ->
+
+        val bundle = Bundle()
+        bundle.putString("file_uri", uri)
+        findNavController().navigate(R.id.imageDetailFragment, bundle)
+
+    }
 
     private var _binding: FragmentImageDetailBinding? = null
     private val binding get() = _binding!!
