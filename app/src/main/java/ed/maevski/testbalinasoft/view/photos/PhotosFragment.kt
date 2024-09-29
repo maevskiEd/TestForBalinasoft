@@ -17,10 +17,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PhotosFragment : Fragment() {
-    private val imageAdapter = ImageAdapter() { uri ->
+    private val imageAdapter = ImageAdapter() { id ->
 
         val bundle = Bundle()
-        bundle.putString("file_uri", uri)
+        bundle.putLong("id_image", id)
         findNavController().navigate(R.id.imageDetailFragment, bundle)
 
     }

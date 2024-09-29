@@ -6,6 +6,7 @@ import ed.maevski.testbalinasoft.domain.irepository.IImageRepository
 import ed.maevski.testbalinasoft.domain.irepository.IUserRepository
 import ed.maevski.testbalinasoft.domain.istorage.ITokenStorage
 import ed.maevski.testbalinasoft.domain.istorage.IUserStorage
+import ed.maevski.testbalinasoft.domain.usecases.GetImageByIdFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetImagesFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetUserNameFromStorageUseCase
 import ed.maevski.testbalinasoft.domain.usecases.SaveImageToDbUseCase
@@ -80,6 +81,16 @@ class DomainModule {
         repository: IImageRepository,
     ): UploadImageUseCase {
         return UploadImageUseCase(
+            repository = repository,
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetImageByIdFromDbUseCase(
+        repository: IImageRepository,
+    ): GetImageByIdFromDbUseCase {
+        return GetImageByIdFromDbUseCase(
             repository = repository,
         )
     }

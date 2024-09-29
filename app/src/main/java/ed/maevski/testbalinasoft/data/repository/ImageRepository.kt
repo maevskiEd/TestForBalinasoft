@@ -44,7 +44,12 @@ class ImageRepository(
             if (response == null) imagesDao.save(mapperImageToImageEntity(image))
             else {
                 val images = withContext(Dispatchers.IO) {
-                    imagesDao.save(mapperImageToImageEntity(image = image, imageDtoOut = response.data))
+                    imagesDao.save(
+                        mapperImageToImageEntity(
+                            image = image,
+                            imageDtoOut = response.data
+                        )
+                    )
                 }
             }
         }
@@ -57,6 +62,14 @@ class ImageRepository(
         }
         return mapperImagesEntityToImages(images)
     }
+
+    override suspend fun getImageByIdFromDb(id: Long): Image {
+        val image = withContext(Dispatchers.IO) {
+            imagesDao.getImageById(id)
+        }
+        return mapperImageEntityToImage(image)
+    }
+
 
     private fun mapperImageToImageEntity(image: Image): ImageEntity {
         return ImageEntity(
@@ -84,7 +97,7 @@ class ImageRepository(
     private fun mapperImageToImageDtoIn(image: Image, base64Image: ByteArray): ImageDtoIn {
         return ImageDtoIn(
             base64Image = base64Image.toBase64String(),
-            date = image.date/1000,
+            date = image.date / 1000,
             lat = image.lat ?: 0.0,
             lng = image.lng ?: 0.0
         )
@@ -99,5 +112,15 @@ class ImageRepository(
                 lng = it.lng
             )
         }
+    }
+
+    private fun mapperImageEntityToImage(imageEntity: ImageEntity): Image {
+        return Image(
+            uri = Uri.parse(imageEntity.uri),
+            date = imageEntity.date ?: 0L,
+            lat = imageEntity.lat,
+            lng = imageEntity.lng
+        )
+
     }
 }

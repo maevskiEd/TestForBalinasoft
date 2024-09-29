@@ -7,28 +7,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import dagger.android.support.AndroidSupportInjection
 import ed.maevski.testbalinasoft.R
 import ed.maevski.testbalinasoft.databinding.FragmentImageDetailBinding
 import ed.maevski.testbalinasoft.view.photos.ImageAdapter
+import ed.maevski.testbalinasoft.view.photos.PhotosViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class ImageDetailFragment : Fragment() {
-    private val commentAdapter = CommentAdapter() { uri ->
-
-        val bundle = Bundle()
-        bundle.putString("file_uri", uri)
-        findNavController().navigate(R.id.imageDetailFragment, bundle)
-
-    }
+//    private val commentAdapter = CommentAdapter() { uri ->
+//
+//        val bundle = Bundle()
+//        bundle.putString("file_uri", uri)
+//        findNavController().navigate(R.id.imageDetailFragment, bundle)
+//
+//    }
 
     private var _binding: FragmentImageDetailBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var viewModel: ImageDetailViewModel
 
-//    @Inject
-//    lateinit var vmFactory: AuthViewModel.Factory
+    @Inject
+    lateinit var vmFactory: ImageDetailViewModel.Factory
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -45,10 +50,22 @@ class ImageDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val uriString = arguments?.getString("file_uri")
-        val imageUri: Uri? = uriString?.let { Uri.parse(it) }
+        val id_image = arguments?.getLong("id_image")
 
-        imageUri?.let { binding.imgPhoto.setImageURI(it) }
+        viewModel =
+            ViewModelProvider(this, vmFactory)[ImageDetailViewModel::class.java]
 
+//        binding.rvImages.adapter = imageAdapter
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.image.collect {
+
+                println("image collect $it")
+                binding.imgPhoto.setImageURI(it.uri)
+            }
+        }
+        if (id_image != null) {
+            viewModel.getImageById(id_image)
+        }
     }
 }

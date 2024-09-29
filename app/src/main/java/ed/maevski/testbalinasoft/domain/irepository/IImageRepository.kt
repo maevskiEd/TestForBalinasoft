@@ -6,5 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface IImageRepository {
     suspend fun save(image: Image): Boolean
     suspend fun getImages(): List<Image>
+    suspend fun getImageByIdFromDb(id: Long): Image
     suspend fun upload(image: Image): Boolean
 }

@@ -4,11 +4,8 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import ed.maevski.testbalinasoft.databinding.ItemCommentBinding
-import ed.maevski.testbalinasoft.databinding.ItemImageBinding
 import ed.maevski.testbalinasoft.domain.models.Comment
-import ed.maevski.testbalinasoft.domain.models.Image
 import ed.maevski.testbalinasoft.utils.toTextDateByFormat
 
 class CommentAdapter(

@@ -18,4 +18,7 @@ interface ImagesDao {
     @Query("SELECT * FROM IMAGES")
     fun getImages(): List<ImageEntity>
 
+    @Query("SELECT * FROM IMAGES  WHERE id = :id")
+    fun getImageById(id: Long): ImageEntity
+
 }

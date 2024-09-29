@@ -120,12 +120,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         lifecycleScope.launch {
-            mainActivityViewModel.uriString.collect {
+            mainActivityViewModel.idImage.collect {
 
-                println("mainActivityViewModel.uriString.collect it = $it")
+                println("mainActivityViewModel.idImage.collect it = $it")
 
                 val bundle = Bundle()
-                bundle.putString("file_uri", it)
+                bundle.putLong("id_image", it)
                 navController.navigate(R.id.imageDetailFragment, bundle)
 
             }

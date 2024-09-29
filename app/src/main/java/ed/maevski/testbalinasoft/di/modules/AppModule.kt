@@ -2,6 +2,7 @@ package ed.maevski.testbalinasoft.di.modules
 
 import dagger.Module
 import dagger.Provides
+import ed.maevski.testbalinasoft.domain.usecases.GetImageByIdFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetImagesFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetUserNameFromStorageUseCase
 import ed.maevski.testbalinasoft.domain.usecases.SaveImageToDbUseCase
@@ -11,6 +12,7 @@ import ed.maevski.testbalinasoft.domain.usecases.UploadImageUseCase
 import ed.maevski.testbalinasoft.view.MainActivityViewModel
 import ed.maevski.testbalinasoft.view.auth.signin.SigninViewModel
 import ed.maevski.testbalinasoft.view.auth.signup.SignupViewModel
+import ed.maevski.testbalinasoft.view.imagedetail.ImageDetailViewModel
 import ed.maevski.testbalinasoft.view.map.MapViewModel
 import ed.maevski.testbalinasoft.view.photos.PhotosViewModel
 
@@ -56,5 +58,12 @@ class AppModule() {
         getImagesFromDbUseCase: GetImagesFromDbUseCase
     ) = PhotosViewModel.Factory(
         getImagesFromDbUseCase = getImagesFromDbUseCase
+    )
+
+    @Provides
+    fun provideImageDetailViewModelFactory(
+        getImageByIdFromDbUseCase: GetImageByIdFromDbUseCase
+    ) = ImageDetailViewModel.Factory(
+        getImageByIdFromDbUseCase = getImageByIdFromDbUseCase
     )
 }

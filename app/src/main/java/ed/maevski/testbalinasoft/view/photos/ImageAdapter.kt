@@ -10,7 +10,7 @@ import ed.maevski.testbalinasoft.domain.models.Image
 import ed.maevski.testbalinasoft.utils.toTextDateByFormat
 
 class ImageAdapter(
-    private val onImgClick: (uri: String) -> Unit,
+    private val onImgClick: (id: Long) -> Unit,
 ) : RecyclerView.Adapter<ImageAdapter.InnerImageViewHolder>() {
     private var images: MutableList<Image> = mutableListOf()
 
@@ -38,7 +38,7 @@ class ImageAdapter(
         holder.date.text = images[position].date.toTextDateByFormat("yyyy-MM-dd")
 
         holder.image.setOnClickListener {
-            onImgClick(images[position].uri.toString())
+            images[position].id?.let { id -> onImgClick(id) }
         }
     }
 

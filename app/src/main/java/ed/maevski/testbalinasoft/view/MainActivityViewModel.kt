@@ -29,6 +29,10 @@ class MainActivityViewModel(
     val uriString: SharedFlow<String>
         get() = _uriString.asSharedFlow()
 
+    private var _idImage = MutableSharedFlow<Long>()
+    val idImage: SharedFlow<Long>
+        get() = _idImage.asSharedFlow()
+
     fun getUserName() {
         viewModelScope.launch {
             val name = getUserNameFromStorageUseCase()
@@ -55,7 +59,7 @@ class MainActivityViewModel(
             if (uploadImageUseCase(image)) {
                 println("uploadImageUseCase -> true")
 
-                _uriString.emit(image.uri.toString())
+                image.id?.let { _idImage.emit(it) }
             }
         }
     }
