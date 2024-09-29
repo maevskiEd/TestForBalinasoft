@@ -1,6 +1,7 @@
 package ed.maevski.testbalinasoft.data.repository
 
 import android.net.Uri
+import androidx.room.util.recursiveFetchLongSparseArray
 import ed.maevski.testbalinasoft.data.api.ImageApi
 import ed.maevski.testbalinasoft.data.cache.dao.ImagesDao
 import ed.maevski.testbalinasoft.data.cache.entity.ImageEntity
@@ -20,20 +21,20 @@ class ImageRepository(
     private val imageApi: ImageApi,
     private val tokenStorage: TokenStorage,
     private val imageStorage: ImageStorage,
-
     ) : IImageRepository {
 
-    override suspend fun save(image: Image): Boolean {
-        withContext(Dispatchers.IO) {
+    override suspend fun save(image: Image): Pair<Boolean,Long> {
+        val result = withContext(Dispatchers.IO) {
             imagesDao.save(mapperImageToImageEntity(image))
         }
-        return true
+        return Pair(true,result)
     }
 
-    override suspend fun upload(image: Image): Boolean {
+    override suspend fun upload(image: Image): Pair<Boolean,Long> {
+        var id: Long = 0L
         val token = tokenStorage.get()
-        if (token.isEmpty()) return false
-        val base64Image = imageStorage.get(image.uri)?.toJpeg() ?: return false
+        if (token.isEmpty()) return Pair(false,0L)
+        val base64Image = imageStorage.get(image.uri)?.toJpeg() ?: return Pair(false,0L)
         val result = imageApi.upload(
             token = token,
             imageDtoIn = mapperImageToImageDtoIn(image = image, base64Image = base64Image)
@@ -41,9 +42,11 @@ class ImageRepository(
         println("upload: $result")
         if (result.isSuccess) {
             val response = result.getOrNull()
-            if (response == null) imagesDao.save(mapperImageToImageEntity(image))
+            if (response == null) {
+                id = imagesDao.save(mapperImageToImageEntity(image))
+            }
             else {
-                val images = withContext(Dispatchers.IO) {
+                id = withContext(Dispatchers.IO) {
                     imagesDao.save(
                         mapperImageToImageEntity(
                             image = image,
@@ -51,9 +54,16 @@ class ImageRepository(
                         )
                     )
                 }
+                
+                println("upload: id = $id")
+                
+                id = response.data.id.toLong()
+
+                println("upload: response.data.id = $id")
+                
             }
         }
-        return true
+        return Pair(result.isSuccess,id)
     }
 
     override suspend fun getImages(): List<Image> {
@@ -106,6 +116,7 @@ class ImageRepository(
     private fun mapperImagesEntityToImages(listImageEntity: List<ImageEntity>): List<Image> {
         return listImageEntity.map {
             Image(
+                id = it.id,
                 uri = Uri.parse(it.uri),
                 date = it.date ?: 0L,
                 lat = it.lat,
@@ -116,6 +127,7 @@ class ImageRepository(
 
     private fun mapperImageEntityToImage(imageEntity: ImageEntity): Image {
         return Image(
+            id = imageEntity.id,
             uri = Uri.parse(imageEntity.uri),
             date = imageEntity.date ?: 0L,
             lat = imageEntity.lat,

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ImagesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun save(imageEntity: ImageEntity)
+    fun save(imageEntity: ImageEntity): Long
 
     @Query("DELETE FROM IMAGES WHERE id = :id")
     fun del(id: Int)

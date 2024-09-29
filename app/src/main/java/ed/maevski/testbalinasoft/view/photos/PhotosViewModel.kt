@@ -19,7 +19,7 @@ class PhotosViewModel(
 
     init {
         println("Init PhotosViewModel")
-        getImages()
+//        getImages()
     }
 
     fun getImages() {

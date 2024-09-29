@@ -56,10 +56,13 @@ class MainActivityViewModel(
         viewModelScope.launch {
             println("uploadImageUseCase")
 
-            if (uploadImageUseCase(image)) {
+            val result = uploadImageUseCase(image)
+
+            if (result.first) {
+
                 println("uploadImageUseCase -> true")
 
-                image.id?.let { _idImage.emit(it) }
+                _idImage.emit(result.second)
             }
         }
     }

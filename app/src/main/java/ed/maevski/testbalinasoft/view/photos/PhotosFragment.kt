@@ -21,6 +21,9 @@ class PhotosFragment : Fragment() {
 
         val bundle = Bundle()
         bundle.putLong("id_image", id)
+
+        println("Bundle id_image = $id")
+
         findNavController().navigate(R.id.imageDetailFragment, bundle)
 
     }

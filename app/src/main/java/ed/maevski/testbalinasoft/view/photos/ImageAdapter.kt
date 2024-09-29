@@ -38,6 +38,9 @@ class ImageAdapter(
         holder.date.text = images[position].date.toTextDateByFormat("yyyy-MM-dd")
 
         holder.image.setOnClickListener {
+
+            println("ImageAdapter onImgClick id =  ${images[position].id}")
+
             images[position].id?.let { id -> onImgClick(id) }
         }
     }

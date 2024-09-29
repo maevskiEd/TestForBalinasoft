@@ -1,7 +1,6 @@
 package ed.maevski.testbalinasoft.view.imagedetail
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import dagger.android.support.AndroidSupportInjection
-import ed.maevski.testbalinasoft.R
 import ed.maevski.testbalinasoft.databinding.FragmentImageDetailBinding
-import ed.maevski.testbalinasoft.view.photos.ImageAdapter
-import ed.maevski.testbalinasoft.view.photos.PhotosViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -52,6 +47,8 @@ class ImageDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val id_image = arguments?.getLong("id_image")
 
+        println("ImageDetailFragment id_image bundle $id_image")
+
         viewModel =
             ViewModelProvider(this, vmFactory)[ImageDetailViewModel::class.java]
 
@@ -61,9 +58,11 @@ class ImageDetailFragment : Fragment() {
             viewModel.image.collect {
 
                 println("image collect $it")
+
                 binding.imgPhoto.setImageURI(it.uri)
             }
         }
+
         if (id_image != null) {
             viewModel.getImageById(id_image)
         }

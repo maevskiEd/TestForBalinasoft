@@ -7,7 +7,7 @@ class SaveImageToDbUseCase(
     private val repository: IImageRepository,
 ) {
     suspend operator fun invoke(image: Image): Boolean {
-        repository.save(image)
-        return true
+        val result = repository.save(image)
+        return result.first
     }
 }

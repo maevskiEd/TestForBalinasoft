@@ -17,7 +17,11 @@ class ImageDetailViewModel(private val getImageByIdFromDbUseCase: GetImageByIdFr
 
     fun getImageById(id: Long) {
         viewModelScope.launch {
-            _image.emit(getImageByIdFromDbUseCase(id))
+            val im = getImageByIdFromDbUseCase(id)
+
+            println("ImageDetailViewModel getImageById $im")
+
+            _image.emit(im)
         }
     }
 
