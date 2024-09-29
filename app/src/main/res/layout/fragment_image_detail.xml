@@ -31,8 +31,35 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/et_comment"
             app:layout_constraintTop_toTopOf="@+id/gl_50"
             tools:listitem="@layout/item_comment"/>
+
+        <EditText
+            android:id="@+id/et_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Напишите комментарий"
+            android:padding="8dp"
+            android:background="@color/white"
+            android:layout_marginEnd="48dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+            android:id="@+id/btn_send"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_send"
+            android:contentDescription="Отправить"
+            android:backgroundTint="@color/white"
+            app:tint="@color/blue_card_dark"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintStart_toEndOf="@id/et_comment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
