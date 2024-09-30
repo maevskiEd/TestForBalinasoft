@@ -2,6 +2,8 @@ package ed.maevski.testbalinasoft.di.modules
 
 import dagger.Module
 import dagger.Provides
+import ed.maevski.testbalinasoft.domain.usecases.DelImageApiUseCase
+import ed.maevski.testbalinasoft.domain.usecases.DownloadImagesUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetImageByIdFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetImagesFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetUserNameFromStorageUseCase
@@ -55,9 +57,13 @@ class AppModule() {
 
     @Provides
     fun providePhotosViewModelFactory(
-        getImagesFromDbUseCase: GetImagesFromDbUseCase
-    ) = PhotosViewModel.Factory(
-        getImagesFromDbUseCase = getImagesFromDbUseCase
+        getImagesFromDbUseCase: GetImagesFromDbUseCase,
+        downloadImagesUseCase: DownloadImagesUseCase,
+        delImageApiUseCase: DelImageApiUseCase,
+        ) = PhotosViewModel.Factory(
+        getImagesFromDbUseCase = getImagesFromDbUseCase,
+        downloadImagesUseCase = downloadImagesUseCase,
+        delImageApiUseCase = delImageApiUseCase,
     )
 
     @Provides

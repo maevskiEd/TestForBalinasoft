@@ -3,11 +3,11 @@ package ed.maevski.testbalinasoft.domain.usecases
 import ed.maevski.testbalinasoft.domain.irepository.IImageRepository
 import ed.maevski.testbalinasoft.domain.models.Image
 
-class UploadImageUseCase(
+class DownloadImagesUseCase(
     private val repository: IImageRepository,
 ) {
-    suspend operator fun invoke(image: Image): Pair<Boolean,Int> {
-        val result = repository.upload(image)
+    suspend operator fun invoke(): Boolean {
+        val result = repository.download()
         return result
     }
 }

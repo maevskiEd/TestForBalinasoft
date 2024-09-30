@@ -12,6 +12,9 @@ interface ImagesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun save(imageEntity: ImageEntity): Long
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(imageEntitys: List<ImageEntity>): List<Long>
+
     @Query("DELETE FROM IMAGES WHERE id = :id")
     fun del(id: Int)
 
@@ -19,6 +22,9 @@ interface ImagesDao {
     fun getImages(): List<ImageEntity>
 
     @Query("SELECT * FROM IMAGES  WHERE id = :id")
-    fun getImageById(id: Long): ImageEntity
+    fun getImageById(id: Int): ImageEntity
+
+    @Query("DELETE FROM IMAGES")
+    fun trunc(): Int
 
 }

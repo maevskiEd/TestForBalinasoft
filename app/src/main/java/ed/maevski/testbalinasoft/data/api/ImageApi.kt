@@ -1,9 +1,8 @@
 package ed.maevski.testbalinasoft.data.api
 
+import ed.maevski.testbalinasoft.data.dto.ResponseDto
 import ed.maevski.testbalinasoft.data.dto.photo.request.ImageDtoIn
 import ed.maevski.testbalinasoft.data.dto.photo.responce.ImageDtoOut
-import ed.maevski.testbalinasoft.data.dto.ResponseDto
-import ed.maevski.testbalinasoft.data.dto.user.response.SignUserOutDto
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -22,12 +21,12 @@ interface ImageApi {
     @GET("/api/image")
     suspend fun download(
         @Header("Access-Token") token: String,
-        @Query("page") from: Int
-    ): Result<ResponseDto<ImageDtoOut>>
+        @Query("page") page: Int
+    ): Result<ResponseDto<List<ImageDtoOut>>>
 
     @DELETE("/api/image/{id}")
     suspend fun del(
         @Header("Access-Token") token: String,
-        @Path("id") from: Int
+        @Path("id") id: Int
     ): Result<ResponseDto<ImageDtoOut>>
 }

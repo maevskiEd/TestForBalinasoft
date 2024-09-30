@@ -10,7 +10,7 @@ import ed.maevski.testbalinasoft.domain.models.Image
 import ed.maevski.testbalinasoft.utils.toTextDateByFormat
 
 class ImageAdapter(
-    private val onImgClick: (id: Long) -> Unit,
+    private val onImgClick: (id: Int, type: String) -> Unit,
 ) : RecyclerView.Adapter<ImageAdapter.InnerImageViewHolder>() {
     private var images: MutableList<Image> = mutableListOf()
 
@@ -31,17 +31,20 @@ class ImageAdapter(
     override fun onBindViewHolder(holder: InnerImageViewHolder, position: Int) {
 
         Glide.with(holder.root)
-            .load(images[position].uri)
+            .load(images[position].uri ?: images[position].url)
             .centerCrop()
             .into(holder.image)
 
         holder.date.text = images[position].date.toTextDateByFormat("yyyy-MM-dd")
 
         holder.image.setOnClickListener {
-
             println("ImageAdapter onImgClick id =  ${images[position].id}")
-
-            images[position].id?.let { id -> onImgClick(id) }
+            images[position].id?.let { id -> onImgClick(id, CLICK) }
+        }
+        holder.image.setOnLongClickListener {
+            println("ImageAdapter onImgLongClick id =  ${images[position].id}")
+            images[position].id?.let { id -> onImgClick(id, LONGCLICK) }
+            true
         }
     }
 
@@ -56,5 +59,19 @@ class ImageAdapter(
     fun setData(images: List<Image>) {
         this.images = images.toMutableList()
         notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun removeImageById(id: Int){
+        val position = images.indexOfFirst { it.id == id }
+        if (position != -1) {
+            images.removeAt(position)
+            notifyDataSetChanged()
+        }
+    }
+
+    companion object {
+        private const val CLICK = "click"
+        private const val LONGCLICK = "longclick"
     }
 }

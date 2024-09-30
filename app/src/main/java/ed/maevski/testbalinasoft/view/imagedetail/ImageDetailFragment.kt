@@ -8,13 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import dagger.android.support.AndroidSupportInjection
 import ed.maevski.testbalinasoft.databinding.FragmentImageDetailBinding
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ImageDetailFragment : Fragment() {
-//    private val commentAdapter = CommentAdapter() { uri ->
+//    private val commentAdapter = CommentAdapter() { id ->
 //
 //        val bundle = Bundle()
 //        bundle.putString("file_uri", uri)
@@ -45,7 +46,7 @@ class ImageDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val id_image = arguments?.getLong("id_image")
+        val id_image = arguments?.getInt("id_image")
 
         println("ImageDetailFragment id_image bundle $id_image")
 
@@ -59,7 +60,13 @@ class ImageDetailFragment : Fragment() {
 
                 println("image collect $it")
 
-                binding.imgPhoto.setImageURI(it.uri)
+                if (it.uri != null) binding.imgPhoto.setImageURI(it.uri)
+                else {
+                    Glide.with(binding.root)
+                        .load(it.url)
+                        .centerCrop()
+                        .into(binding.imgPhoto)
+                }
             }
         }
 

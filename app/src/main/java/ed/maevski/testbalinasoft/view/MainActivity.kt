@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity() {
                 println("mainActivityViewModel.idImage.collect it = $it")
 
                 val bundle = Bundle()
-                bundle.putLong("id_image", it)
+                bundle.putInt("id_image", it)
                 navController.navigate(R.id.imageDetailFragment, bundle)
 
             }

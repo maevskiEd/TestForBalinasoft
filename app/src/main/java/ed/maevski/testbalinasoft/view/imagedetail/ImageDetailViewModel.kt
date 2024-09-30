@@ -3,6 +3,7 @@ package ed.maevski.testbalinasoft.view.imagedetail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import ed.maevski.testbalinasoft.domain.models.Comment
 import ed.maevski.testbalinasoft.domain.models.Image
 import ed.maevski.testbalinasoft.domain.usecases.GetImageByIdFromDbUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,7 +16,7 @@ class ImageDetailViewModel(private val getImageByIdFromDbUseCase: GetImageByIdFr
     val image: SharedFlow<Image>
         get() = _image.asSharedFlow()
 
-    fun getImageById(id: Long) {
+    fun getImageById(id: Int) {
         viewModelScope.launch {
             val im = getImageByIdFromDbUseCase(id)
 
@@ -24,6 +25,16 @@ class ImageDetailViewModel(private val getImageByIdFromDbUseCase: GetImageByIdFr
             _image.emit(im)
         }
     }
+
+//    fun sendComment(image: Image, comment: Comment) {
+//        viewModelScope.launch {
+//            val im = getImageByIdFromDbUseCase(id)
+//
+//            println("ImageDetailViewModel getImageById $im")
+//
+//            _image.emit(im)
+//        }
+//    }
 
     class Factory(
         private val getImageByIdFromDbUseCase: GetImageByIdFromDbUseCase

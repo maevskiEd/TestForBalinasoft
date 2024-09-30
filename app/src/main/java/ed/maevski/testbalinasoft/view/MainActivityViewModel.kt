@@ -29,8 +29,8 @@ class MainActivityViewModel(
     val uriString: SharedFlow<String>
         get() = _uriString.asSharedFlow()
 
-    private var _idImage = MutableSharedFlow<Long>()
-    val idImage: SharedFlow<Long>
+    private var _idImage = MutableSharedFlow<Int>()
+    val idImage: SharedFlow<Int>
         get() = _idImage.asSharedFlow()
 
     fun getUserName() {

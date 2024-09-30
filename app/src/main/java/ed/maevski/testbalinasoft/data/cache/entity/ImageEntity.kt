@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "IMAGES")
 data class ImageEntity(
-    @field: ColumnInfo(name = "id") @field:PrimaryKey(autoGenerate = true) var id: Long = 0,
+    @field: ColumnInfo(name = "id") @field:PrimaryKey(autoGenerate = true) var id: Int = 0,
     @field: ColumnInfo(name = "uri") val uri: String? = null,
     @field: ColumnInfo(name = "url") val url: String? = null,
     @field: ColumnInfo(name = "date") val date: Long? = null,

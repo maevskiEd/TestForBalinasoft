@@ -17,15 +17,18 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PhotosFragment : Fragment() {
-    private val imageAdapter = ImageAdapter() { id ->
+    private val imageAdapter = ImageAdapter() { id, type ->
 
         val bundle = Bundle()
-        bundle.putLong("id_image", id)
+        bundle.putInt("id_image", id)
 
         println("Bundle id_image = $id")
 
-        findNavController().navigate(R.id.imageDetailFragment, bundle)
-
+        when (type) {
+            "click" -> findNavController().navigate(R.id.imageDetailFragment, bundle)
+            "longclick" -> viewModel.delImage(id)
+            else -> println("не click и не longclick")
+        }
     }
 
     private var _binding: FragmentPhotosBinding? = null
@@ -64,6 +67,11 @@ class PhotosFragment : Fragment() {
 
                 println("images collect $it")
                 initRV(it)
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.idImage.collect {
+                imageAdapter.removeImageById(id)
             }
         }
         viewModel.getImages()

@@ -7,7 +7,7 @@ class GetImageByIdFromDbUseCase(
     private val repository: IImageRepository
 ) {
 
-    suspend operator fun invoke(id: Long): Image {
+    suspend operator fun invoke(id: Int): Image {
         val result = repository.getImageByIdFromDb(id)
         return result
     }
