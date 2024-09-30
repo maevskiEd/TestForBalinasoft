@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="@dimen/default_margin" />
+        app:layout_constraintGuide_begin="16dp" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"
@@ -22,65 +22,67 @@
 
     <ImageView
         android:id="@+id/dialog_image"
-        android:layout_width="@dimen/dialog_confirmation_image_width"
-        android:layout_height="@dimen/dialog_confirmation_image_height"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:src="@drawable/ic_camera"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/main_guideline"
-        app:tint="@color/primary"
+        app:tint="@color/green"
         tools:visibility="visible" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/dialog_animation"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dialog_anim_image_height"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_guideline"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/no_server_robot"
-        tools:visibility="visible" />
+    <!--    <com.airbnb.lottie.LottieAnimationView-->
+    <!--        android:id="@+id/dialog_animation"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="@dimen/dialog_anim_image_height"-->
+    <!--        android:visibility="gone"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/main_guideline"-->
+    <!--        app:lottie_autoPlay="true"-->
+    <!--        app:lottie_loop="true"-->
+    <!--        app:lottie_rawRes="@raw/no_server_robot"-->
+    <!--        tools:visibility="visible" />-->
 
     <TextView
         android:id="@+id/dialog_title"
-        style="@style/DialogTextTitleStyle"
-        android:layout_marginStart="@dimen/big_margin"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/big_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:gravity="center"
+        android:textSize="18sp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barrier"
-        tools:text="@string/some_text"
+        tools:text="dialog"
         tools:visibility="visible" />
 
     <TextView
         android:id="@+id/dialog_text"
-        style="@style/DialogTextStyle"
+        android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16sp"
         android:gravity="center"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dialog_title"
-        tools:text="@string/some_text"
+        tools:text="dialog text"
         tools:visibility="visible" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/big_margin"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginBottom="@dimen/big_margin"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
         android:gravity="end"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -91,7 +93,7 @@
             android:id="@+id/dialog_button_cancel"
             style="@style/MaiboButtonPurple"
             android:layout_width="wrap_content"
-            android:layout_marginEnd="@dimen/confirmation_dialog_buttons_margin"
+            android:layout_marginEnd="50dp"
             android:layout_weight="1"
             android:visibility="visible"
             tools:text="@string/no" />

@@ -1,7 +1,6 @@
-package com.example.patients.view.dialogs
+package ed.maevski.testbalinasoft.dialogs
 
 import android.os.Bundle
-import ed.maevski.testbalinasoft.dialogs.DialogType
 
 class ConfirmationDialogBuilder(
     private val listener: ConfirmationDialogListener? = null, private val canCancel: Boolean = false

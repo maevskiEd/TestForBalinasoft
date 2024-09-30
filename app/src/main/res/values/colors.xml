@@ -10,4 +10,7 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="blue_card_dark">#59A2A9</color>
+
+    <color name="primary">#8B47D0</color>
+    <color name="maibo_light_purple">#F2ECFD</color>
 </resources>

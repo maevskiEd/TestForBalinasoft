@@ -1,4 +1,4 @@
-package com.example.patients.view.dialogs
+package ed.maevski.testbalinasoft.dialogs
 
 import android.os.Bundle
 

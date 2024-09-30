@@ -1,5 +1,6 @@
 package ed.maevski.testbalinasoft.view.photos
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +13,9 @@ import androidx.navigation.fragment.findNavController
 import dagger.android.support.AndroidSupportInjection
 import ed.maevski.testbalinasoft.R
 import ed.maevski.testbalinasoft.databinding.FragmentPhotosBinding
+import ed.maevski.testbalinasoft.dialogs.ConfirmationDialogBuilder
+import ed.maevski.testbalinasoft.dialogs.ConfirmationDialogListener
+import ed.maevski.testbalinasoft.dialogs.DialogType
 import ed.maevski.testbalinasoft.domain.models.Image
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,7 +30,16 @@ class PhotosFragment : Fragment() {
 
         when (type) {
             "click" -> findNavController().navigate(R.id.imageDetailFragment, bundle)
-            "longclick" -> viewModel.delImage(id)
+
+            "longclick" -> {
+                showDialog(id)
+//                ConfirmationDialogBuilder(object : ConfirmationDialogListener {
+//                    override fun onAcceptClick(args: Bundle?) {
+//                        viewModel.delImage(id)
+//                    }
+//                }).setDialogType(DialogType.CONFIRM_DELETE).build()
+            }
+
             else -> println("не click и не longclick")
         }
     }
@@ -71,7 +84,10 @@ class PhotosFragment : Fragment() {
         }
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.idImage.collect {
-                imageAdapter.removeImageById(id)
+
+                println("removeImageById $it")
+
+                imageAdapter.removeImageById(it)
             }
         }
         viewModel.getImages()
@@ -84,5 +100,21 @@ class PhotosFragment : Fragment() {
     fun updateRV() {
         println("updateRV")
         viewModel.getImages()
+    }
+
+    private fun showDialog(id: Int) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Удалить фото:")
+        builder.setMessage("Вы уверены?")
+
+        builder.setPositiveButton("Да") { dialog, which ->
+            viewModel.delImage(id)
+        }
+
+        builder.setNegativeButton("Нет") { dialog, which ->
+            // Действие при нажатии "Нет"
+        }
+
+        builder.show()
     }
 }

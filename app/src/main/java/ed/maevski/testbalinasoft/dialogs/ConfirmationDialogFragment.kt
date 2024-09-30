@@ -1,4 +1,4 @@
-package com.example.patients.view.dialogs
+package ed.maevski.testbalinasoft.dialogs
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -7,11 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.example.patients.R
-import com.example.patients.databinding.DialogConfirmationBinding
-import com.example.patients.utils.uiextensions.hide
-import com.example.patients.utils.uiextensions.show
-import ed.maevski.testbalinasoft.dialogs.DialogType
+import ed.maevski.testbalinasoft.R
+import ed.maevski.testbalinasoft.databinding.DialogConfirmationBinding
+import ed.maevski.testbalinasoft.utils.hide
+import ed.maevski.testbalinasoft.utils.show
 
 class ConfirmationDialogFragment private constructor() : DialogFragment() {
 
@@ -46,21 +45,21 @@ class ConfirmationDialogFragment private constructor() : DialogFragment() {
                 show()
             }
         }
-        dialogType.animationImageResId?.let {
-            dialogAnimation.apply {
-                setAnimation(it)
-                show()
-            }
-        }
+//        dialogType.animationImageResId?.let {
+//            dialogAnimation.apply {
+//                setAnimation(it)
+//                show()
+//            }
+//        }
         dialogType.titleResId?.let {
             dialogTitle.apply {
-                text = getString(it)
+                text = it
                 show()
             }
         }
         dialogType.textResId?.let {
             dialogText.apply {
-                text = getString(it)
+                text = it
                 show()
             }
         }

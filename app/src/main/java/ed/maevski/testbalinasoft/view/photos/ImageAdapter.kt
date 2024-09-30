@@ -66,7 +66,7 @@ class ImageAdapter(
         val position = images.indexOfFirst { it.id == id }
         if (position != -1) {
             images.removeAt(position)
-            notifyDataSetChanged()
+            notifyItemRemoved(position)
         }
     }
 
