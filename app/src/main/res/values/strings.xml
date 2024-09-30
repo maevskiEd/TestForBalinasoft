@@ -6,9 +6,57 @@
     <string name="log_in">LOG IN</string>
     <string name="sign_up">SIGN UP</string>
 
+    <string name="yes">Да</string>
+    <string name="decline">Нет</string>
+    <string name="no">Нет</string>
+    <string name="ok">Ок</string>
+
 <!--    <string name="navigation_drawer_open">Open navigation drawer</string>-->
 <!--    <string name="navigation_drawer_close">Close navigation drawer</string>-->
 
     <string name="menu_photos">Photos</string>
     <string name="menu_map">Map</string>
+
+    <!-- Dialogs -->
+    <string name="quit_app_question">Действительно хотите уйти?</string>
+    <string name="dialog_no_internet_title">Нет подключения к интернету </string>
+    <string name="dialog_no_internet_message">Пожалуйста, проверьте подключение и повторите попытку</string>
+    <string name="dialog_no_map_perm_title">Не предоставлены права</string>
+    <string name="dialog_no_map_perm_message">Для работы с картой требуется предоставить соответствующие разрешения</string>
+    <string name="map_permissions">Запрос местоположения</string>
+    <string name="map_permissions_detail">Указанные права необходимы для корректного отображения карты</string>
+    <string name="call_phone_permissions">Запрос звонков</string>
+    <string name="call_phone_permissions_detail">Указанные права необходимы для возможности позвонить заявителю</string>
+    <string name="post_notifications_permissions">Запрос получения оповещений</string>
+    <string name="post_notifications_permissions_detail">Указанные права необходимы для возможности получать уведомления о новых заявках</string>
+    <string name="camera_permissions">Запрос на работу с камерой</string>
+    <string name="camera_permissions_detail">Указанные права необходимы для сканирования QR-кода и дальнейшего подключения к УК</string>
+    <string name="permissions_denied_title">Отказ</string>
+    <string name="permissions_denied_message">Без соответствующих разрешений выполнение невозможно</string>
+    <string name="permissions_not_granted">Права не были предоставлены: %1$s</string>
+    <string name="permissions_granted">Права предоставлены</string>
+    <string name="permission_manual_title">Без соответствующих разрешений выполнение невозможно</string>
+    <string name="permission_manual_message">Необходимо выдать разрешения вручную. Перейти в настройки телефона?</string>
+    <string name="dialog_cancel_meeting_text">Вы уверены, что хотите отменить запись?</string>
+    <string name="dialog_cancel_meeting_success_title">Ваша запись отменена</string>
+    <string name="dialog_cancel_meeting_success_text">Чтобы записаться заново,\nвыберите специальность на главном экране</string>
+    <string name="dialog_no_call_title">Не получили звонок от клиники\nв течение 60 минут?</string>
+    <string name="dialog_no_call_text">Позвоните в клинику, чтобы уточнить статус вашей записи.</string>
+    <string name="dialog_no_call_accept_button">Позвонить</string>
+    <string name="dialog_no_call_not_found_clinic_phones">Телефон клиники не определен</string>
+    <string name="dialog_move_meeting_text">Вы уверены, что хотите перенести запись?</string>
+    <string name="dialog_move_meeting_success_title">Ваша заявка отправлена</string>
+    <string name="dialog_move_meeting_success_text">В течение 60 минут клиника\nперезвонит Вам для переноса\nзаписи, ожидайте звонка.</string>
+    <string name="dialog_create_meeting_success_text">Ваша заявка успешно отправлена.\nВ случае, если временной слот окажется полностью занят — Вам перезвонит администратор</string>
+    <string name="dialog_create_meeting_failed_text">Произошла ошибка!\nПожалуйста повторите попытку.</string>
+    <string name="dialog_user_logout_text">Вы уверены, что хотите выйти из учетной записи?</string>
+    <string name="dialog_send_review_title">Ваш отзыв опубликован!</string>
+    <string name="dialog_send_review_accept_button">Вернуться на главную</string>
+    <string name="dialog_fragment_no_internet_title">Соединение прервано</string>
+    <string name="dialog_fragment_no_internet_text">Возможно, вы не подключены\nк интернету. Проверьте\nподключение и повторите\nпопытку.</string>
+    <string name="dialog_fragment_no_internet_notification">Нет подключения к интернету </string>
+    <string name="dialog_user_change_text">Сменить пользователя?</string>
+    <string name="dialog_user_delete_text">Вы уверены, что хотите удалить пользователя?</string>
+    <string name="dialog_sign_in_another_clinic_title">Смена клиники</string>
+    <string name="dialog_sign_in_another_clinic_text">Поменять клинику для записи?</string>
 </resources>
