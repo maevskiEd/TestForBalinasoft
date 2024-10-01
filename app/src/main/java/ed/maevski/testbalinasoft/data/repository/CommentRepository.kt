@@ -13,10 +13,14 @@ class CommentRepository(
 
     ) : ICommentRepository {
 
-    override suspend fun upload(imageId: Int,comment: Comment): Boolean {
+    override suspend fun upload(comment: Comment): Boolean {
         val token = tokenStorage.get()
-        if (token.isEmpty()) return false
-        val result = commentApi.upload(token = token, commentDtoIn = mapperCommentToCommentDtoIn(comment), imageId = imageId)
+        if (token.isEmpty() || comment.imageId == null) return false
+        val result = commentApi.upload(
+            token = token,
+            commentDtoIn = mapperCommentToCommentDtoIn(comment),
+            imageId = comment.imageId
+        )
         return result.isSuccess
     }
 

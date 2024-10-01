@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import dagger.android.support.AndroidSupportInjection
 import ed.maevski.testbalinasoft.databinding.FragmentImageDetailBinding
+import ed.maevski.testbalinasoft.domain.models.Comment
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -68,6 +69,17 @@ class ImageDetailFragment : Fragment() {
 
         if (id_image != null) {
             viewModel.getImageById(id_image)
+        }
+
+        binding.btnSend.setOnClickListener {
+            if (id_image != null) {
+                val comment = Comment(
+                    imageId = id_image,
+                    date = System.currentTimeMillis(),
+                    text = binding.etComment.text.toString()
+                )
+                viewModel.sendComment(comment)
+            }
         }
     }
 }

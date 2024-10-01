@@ -13,6 +13,7 @@ import ed.maevski.testbalinasoft.domain.usecases.GetImageByIdFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetImagesFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetUserNameFromStorageUseCase
 import ed.maevski.testbalinasoft.domain.usecases.SaveImageToDbUseCase
+import ed.maevski.testbalinasoft.domain.usecases.SendCommentUseCase
 import ed.maevski.testbalinasoft.domain.usecases.SignInUseCase
 import ed.maevski.testbalinasoft.domain.usecases.SignUpUseCase
 import ed.maevski.testbalinasoft.domain.usecases.UploadCommentUseCase
@@ -68,6 +69,16 @@ class DomainModule {
     ): GetUserNameFromStorageUseCase {
         return GetUserNameFromStorageUseCase(
             userSt = userSt,
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideSaveImageUseCase(
+        repository: ICommentRepository,
+    ): SendCommentUseCase {
+        return SendCommentUseCase(
+            repository = repository,
         )
     }
 

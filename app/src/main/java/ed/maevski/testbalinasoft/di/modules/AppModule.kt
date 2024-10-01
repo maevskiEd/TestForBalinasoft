@@ -8,6 +8,7 @@ import ed.maevski.testbalinasoft.domain.usecases.GetImageByIdFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetImagesFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetUserNameFromStorageUseCase
 import ed.maevski.testbalinasoft.domain.usecases.SaveImageToDbUseCase
+import ed.maevski.testbalinasoft.domain.usecases.SendCommentUseCase
 import ed.maevski.testbalinasoft.domain.usecases.SignInUseCase
 import ed.maevski.testbalinasoft.domain.usecases.SignUpUseCase
 import ed.maevski.testbalinasoft.domain.usecases.UploadImageUseCase
@@ -68,8 +69,11 @@ class AppModule() {
 
     @Provides
     fun provideImageDetailViewModelFactory(
-        getImageByIdFromDbUseCase: GetImageByIdFromDbUseCase
-    ) = ImageDetailViewModel.Factory(
-        getImageByIdFromDbUseCase = getImageByIdFromDbUseCase
+        getImageByIdFromDbUseCase: GetImageByIdFromDbUseCase,
+        sendCommentUseCase: SendCommentUseCase,
+
+        ) = ImageDetailViewModel.Factory(
+        getImageByIdFromDbUseCase = getImageByIdFromDbUseCase,
+        sendCommentUseCase = sendCommentUseCase,
     )
 }
