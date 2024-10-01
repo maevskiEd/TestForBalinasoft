@@ -9,6 +9,6 @@ class UploadCommentUseCase(
 ) {
     suspend operator fun invoke(image: Image, comment: Comment): Boolean {
         if (image.id == null) return false
-        return repository.upload(image.id, comment)
+        return repository.upload(comment)
     }
 }

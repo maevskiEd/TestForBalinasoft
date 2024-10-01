@@ -3,6 +3,7 @@ package ed.maevski.testbalinasoft.di.modules
 import dagger.Module
 import dagger.Provides
 import ed.maevski.testbalinasoft.domain.usecases.DelImageApiUseCase
+import ed.maevski.testbalinasoft.domain.usecases.DownloadCommentsUseCase
 import ed.maevski.testbalinasoft.domain.usecases.DownloadImagesUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetImageByIdFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetImagesFromDbUseCase
@@ -71,9 +72,11 @@ class AppModule() {
     fun provideImageDetailViewModelFactory(
         getImageByIdFromDbUseCase: GetImageByIdFromDbUseCase,
         sendCommentUseCase: SendCommentUseCase,
+        downloadCommentsUseCase: DownloadCommentsUseCase,
 
         ) = ImageDetailViewModel.Factory(
         getImageByIdFromDbUseCase = getImageByIdFromDbUseCase,
         sendCommentUseCase = sendCommentUseCase,
+        downloadCommentsUseCase = downloadCommentsUseCase,
     )
 }

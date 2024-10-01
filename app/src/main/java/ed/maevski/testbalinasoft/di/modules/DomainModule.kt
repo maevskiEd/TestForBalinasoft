@@ -8,6 +8,7 @@ import ed.maevski.testbalinasoft.domain.irepository.IUserRepository
 import ed.maevski.testbalinasoft.domain.istorage.ITokenStorage
 import ed.maevski.testbalinasoft.domain.istorage.IUserStorage
 import ed.maevski.testbalinasoft.domain.usecases.DelImageApiUseCase
+import ed.maevski.testbalinasoft.domain.usecases.DownloadCommentsUseCase
 import ed.maevski.testbalinasoft.domain.usecases.DownloadImagesUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetImageByIdFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetImagesFromDbUseCase
@@ -28,6 +29,16 @@ class DomainModule {
         repository: IImageRepository,
     ): DelImageApiUseCase {
         return DelImageApiUseCase(
+            repository = repository,
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideDownloadCommentsUseCase(
+        repository: ICommentRepository,
+    ): DownloadCommentsUseCase {
+        return DownloadCommentsUseCase(
             repository = repository,
         )
     }
@@ -74,7 +85,7 @@ class DomainModule {
 
     @Singleton
     @Provides
-    fun provideSaveImageUseCase(
+    fun provideSendCommentUseCase(
         repository: ICommentRepository,
     ): SendCommentUseCase {
         return SendCommentUseCase(

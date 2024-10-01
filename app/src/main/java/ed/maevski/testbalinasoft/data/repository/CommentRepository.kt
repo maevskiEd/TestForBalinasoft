@@ -24,6 +24,18 @@ class CommentRepository(
         return result.isSuccess
     }
 
+    override suspend fun download(imageId: Int): Boolean {
+        val token = tokenStorage.get()
+        if (token.isEmpty()) return false
+        val result = commentApi.download(
+            token = token,
+            imageId = imageId,
+            page = 0
+        )
+        return result.isSuccess
+    }
+
+
     private fun mapperCommentToCommentDtoIn(comment: Comment): CommentDtoIn {
         return CommentDtoIn(
             text = comment.text,

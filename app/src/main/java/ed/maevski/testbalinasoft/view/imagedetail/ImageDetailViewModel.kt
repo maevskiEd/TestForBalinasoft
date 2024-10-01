@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import ed.maevski.testbalinasoft.domain.models.Comment
 import ed.maevski.testbalinasoft.domain.models.Image
+import ed.maevski.testbalinasoft.domain.usecases.DownloadCommentsUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetImageByIdFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.SendCommentUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,6 +16,7 @@ import kotlinx.coroutines.launch
 class ImageDetailViewModel(
     private val getImageByIdFromDbUseCase: GetImageByIdFromDbUseCase,
     private val sendCommentUseCase: SendCommentUseCase,
+    private val downloadCommentsUseCase: DownloadCommentsUseCase,
     ) : ViewModel() {
     private var _image = MutableSharedFlow<Image>()
     val image: SharedFlow<Image>
@@ -23,7 +25,7 @@ class ImageDetailViewModel(
     fun getImageById(id: Int) {
         viewModelScope.launch {
             val im = getImageByIdFromDbUseCase(id)
-
+            getComments(id)
             println("ImageDetailViewModel getImageById $im")
 
             _image.emit(im)
@@ -36,9 +38,16 @@ class ImageDetailViewModel(
         }
     }
 
+    fun getComments(id: Int) {
+        viewModelScope.launch {
+            downloadCommentsUseCase(id)
+        }
+    }
+
     class Factory(
         private val getImageByIdFromDbUseCase: GetImageByIdFromDbUseCase,
         private val sendCommentUseCase: SendCommentUseCase,
+        private val downloadCommentsUseCase: DownloadCommentsUseCase,
     ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -46,6 +55,7 @@ class ImageDetailViewModel(
                 return ImageDetailViewModel(
                     getImageByIdFromDbUseCase = getImageByIdFromDbUseCase,
                     sendCommentUseCase = sendCommentUseCase,
+                    downloadCommentsUseCase = downloadCommentsUseCase,
                 ) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
