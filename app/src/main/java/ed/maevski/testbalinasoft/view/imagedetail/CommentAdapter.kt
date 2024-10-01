@@ -9,7 +9,7 @@ import ed.maevski.testbalinasoft.domain.models.Comment
 import ed.maevski.testbalinasoft.utils.toTextDateByFormat
 
 class CommentAdapter(
-    private val onLongClick: (commentId: Long) -> Unit,
+    private val onLongClick: (imageId: Int,commentId: Int) -> Unit,
 ) : RecyclerView.Adapter<CommentAdapter.InnerCommentViewHolder>() {
     private var comments: MutableList<Comment> = mutableListOf()
 
@@ -32,9 +32,9 @@ class CommentAdapter(
         holder.text.text = comments[position].text
         holder.date.text = comments[position].date.toTextDateByFormat("yyyy-MM-dd")
 
-        holder.root.setOnClickListener {
-            comments[position].commentId?.let { id -> onLongClick(id) }
-        }
+//        holder.root.setOnClickListener {
+//            comments[position].commentId?.let { id -> onLongClick(id) }
+//        }
     }
 
     override fun getItemCount(): Int = comments.size

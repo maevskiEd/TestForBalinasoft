@@ -10,7 +10,7 @@ fun ByteArray.toJpeg(): ByteArray? {
     val bitmap: Bitmap? = BitmapFactory.decodeByteArray(this, 0, this.size)
     return if (bitmap != null) {
         val outputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outputStream)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, outputStream)
         outputStream.toByteArray()
     } else {
         null

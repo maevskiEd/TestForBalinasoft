@@ -15,13 +15,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ImageDetailFragment : Fragment() {
-//    private val commentAdapter = CommentAdapter() { id ->
-//
-//        val bundle = Bundle()
-//        bundle.putString("file_uri", uri)
-//        findNavController().navigate(R.id.imageDetailFragment, bundle)
-//
-//    }
+    private val commentAdapter = CommentAdapter() { idImage, idComment ->
+
+    }
 
     private var _binding: FragmentImageDetailBinding? = null
     private val binding get() = _binding!!
@@ -53,7 +49,7 @@ class ImageDetailFragment : Fragment() {
         viewModel =
             ViewModelProvider(this, vmFactory)[ImageDetailViewModel::class.java]
 
-//        binding.rvImages.adapter = imageAdapter
+        binding.rvComments.adapter = commentAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.image.collect {
