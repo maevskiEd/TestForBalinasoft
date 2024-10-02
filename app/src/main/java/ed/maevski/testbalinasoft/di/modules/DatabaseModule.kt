@@ -18,5 +18,9 @@ class DatabaseModule {
     @Singleton
     @Provides
     fun provideImagesDao(context: Context) = provideDb(context).imagesDao()
+
+    @Singleton
+    @Provides
+    fun provideCommentsDao(context: Context) = provideDb(context).commentsDao()
 }
 

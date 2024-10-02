@@ -7,9 +7,11 @@ import ed.maevski.testbalinasoft.domain.irepository.IImageRepository
 import ed.maevski.testbalinasoft.domain.irepository.IUserRepository
 import ed.maevski.testbalinasoft.domain.istorage.ITokenStorage
 import ed.maevski.testbalinasoft.domain.istorage.IUserStorage
+import ed.maevski.testbalinasoft.domain.usecases.DelCommentApiUseCase
 import ed.maevski.testbalinasoft.domain.usecases.DelImageApiUseCase
 import ed.maevski.testbalinasoft.domain.usecases.DownloadCommentsUseCase
 import ed.maevski.testbalinasoft.domain.usecases.DownloadImagesUseCase
+import ed.maevski.testbalinasoft.domain.usecases.GetCommentsByIdImageFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetImageByIdFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetImagesFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetUserNameFromStorageUseCase
@@ -23,6 +25,16 @@ import javax.inject.Singleton
 
 @Module
 class DomainModule {
+    @Singleton
+    @Provides
+    fun provideDelCommentApiUseCase(
+        repository: ICommentRepository,
+    ): DelCommentApiUseCase {
+        return DelCommentApiUseCase(
+            repository = repository,
+        )
+    }
+
     @Singleton
     @Provides
     fun provideDelImageApiUseCase(
@@ -49,6 +61,16 @@ class DomainModule {
         repository: IImageRepository,
     ): DownloadImagesUseCase {
         return DownloadImagesUseCase(
+            repository = repository,
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideGetCommentsByIdImageFromDbUseCase(
+        repository: ICommentRepository,
+    ): GetCommentsByIdImageFromDbUseCase {
+        return GetCommentsByIdImageFromDbUseCase(
             repository = repository,
         )
     }

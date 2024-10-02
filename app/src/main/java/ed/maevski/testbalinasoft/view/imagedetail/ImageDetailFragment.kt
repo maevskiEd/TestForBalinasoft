@@ -1,5 +1,6 @@
 package ed.maevski.testbalinasoft.view.imagedetail
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,8 +17,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ImageDetailFragment : Fragment() {
-    private val commentAdapter = CommentAdapter() { idImage, idComment ->
-
+    private val commentAdapter = CommentAdapter() { idComment ->
+        showDialog(idComment)
     }
 
     private var _binding: FragmentImageDetailBinding? = null
@@ -67,7 +68,24 @@ class ImageDetailFragment : Fragment() {
             }
         }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.comments.collect {
+
+                println("comments collect $it")
+                initRV(it)
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.idComment.collect {
+
+                println("removeCommentById $it")
+
+                commentAdapter.removeCommentById(it)
+            }
+        }
+
         if (id_image != null) {
+            viewModel.imageId = id_image
             viewModel.getImageById(id_image)
         }
 
@@ -81,5 +99,25 @@ class ImageDetailFragment : Fragment() {
                 viewModel.sendComment(comment)
             }
         }
+    }
+
+    private fun initRV(data: List<Comment>) {
+        commentAdapter.setData(data)
+    }
+
+    private fun showDialog(commentId: Int) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Удалить комментарий:")
+        builder.setMessage("Вы уверены?")
+
+        builder.setPositiveButton("Да") { dialog, which ->
+            viewModel.delComment(imageId = viewModel.imageId, commentId = commentId)
+        }
+
+        builder.setNegativeButton("Нет") { dialog, which ->
+            // Действие при нажатии "Нет"
+        }
+
+        builder.show()
     }
 }

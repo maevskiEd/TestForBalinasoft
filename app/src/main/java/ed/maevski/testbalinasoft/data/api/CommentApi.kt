@@ -4,6 +4,7 @@ import ed.maevski.testbalinasoft.data.dto.ResponseDto
 import ed.maevski.testbalinasoft.data.dto.comment.request.CommentDtoIn
 import ed.maevski.testbalinasoft.data.dto.comment.responce.CommentDtoOut
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -23,5 +24,12 @@ interface CommentApi {
         @Header("Access-Token") token: String,
         @Path("imageId") imageId: Int,
         @Query("page") page: Int
+    ): Result<ResponseDto<List<CommentDtoOut>>>
+
+    @DELETE("/api/image/{imageId}/comment/{commentId}")
+    suspend fun del(
+        @Header("Access-Token") token: String,
+        @Path("imageId") imageId: Int,
+        @Path("commentId") commentId: Int
     ): Result<ResponseDto<CommentDtoOut>>
 }

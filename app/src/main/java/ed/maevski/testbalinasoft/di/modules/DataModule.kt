@@ -7,6 +7,7 @@ import dagger.Provides
 import ed.maevski.testbalinasoft.data.api.CommentApi
 import ed.maevski.testbalinasoft.data.api.ImageApi
 import ed.maevski.testbalinasoft.data.api.UserApi
+import ed.maevski.testbalinasoft.data.cache.dao.CommentsDao
 import ed.maevski.testbalinasoft.data.cache.dao.ImagesDao
 import ed.maevski.testbalinasoft.data.repository.CommentRepository
 import ed.maevski.testbalinasoft.data.repository.ImageRepository
@@ -29,10 +30,12 @@ class DataModule {
     fun provideCommentRepository(
         commentApi: CommentApi,
         tokenStorage: TokenStorage,
+        commentsDao: CommentsDao
         ) : ICommentRepository {
             return CommentRepository(
                 commentApi = commentApi,
                 tokenStorage = tokenStorage,
+                commentsDao = commentsDao
             )
     }
 

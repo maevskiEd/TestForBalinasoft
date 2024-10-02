@@ -2,9 +2,11 @@ package ed.maevski.testbalinasoft.di.modules
 
 import dagger.Module
 import dagger.Provides
+import ed.maevski.testbalinasoft.domain.usecases.DelCommentApiUseCase
 import ed.maevski.testbalinasoft.domain.usecases.DelImageApiUseCase
 import ed.maevski.testbalinasoft.domain.usecases.DownloadCommentsUseCase
 import ed.maevski.testbalinasoft.domain.usecases.DownloadImagesUseCase
+import ed.maevski.testbalinasoft.domain.usecases.GetCommentsByIdImageFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetImageByIdFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetImagesFromDbUseCase
 import ed.maevski.testbalinasoft.domain.usecases.GetUserNameFromStorageUseCase
@@ -62,7 +64,7 @@ class AppModule() {
         getImagesFromDbUseCase: GetImagesFromDbUseCase,
         downloadImagesUseCase: DownloadImagesUseCase,
         delImageApiUseCase: DelImageApiUseCase,
-        ) = PhotosViewModel.Factory(
+    ) = PhotosViewModel.Factory(
         getImagesFromDbUseCase = getImagesFromDbUseCase,
         downloadImagesUseCase = downloadImagesUseCase,
         delImageApiUseCase = delImageApiUseCase,
@@ -73,10 +75,13 @@ class AppModule() {
         getImageByIdFromDbUseCase: GetImageByIdFromDbUseCase,
         sendCommentUseCase: SendCommentUseCase,
         downloadCommentsUseCase: DownloadCommentsUseCase,
-
-        ) = ImageDetailViewModel.Factory(
+        delCommentApiUseCase: DelCommentApiUseCase,
+        getCommentsByIdImageFromDbUseCase: GetCommentsByIdImageFromDbUseCase,
+    ) = ImageDetailViewModel.Factory(
         getImageByIdFromDbUseCase = getImageByIdFromDbUseCase,
         sendCommentUseCase = sendCommentUseCase,
         downloadCommentsUseCase = downloadCommentsUseCase,
+        delCommentApiUseCase = delCommentApiUseCase,
+        getCommentsByIdImageFromDbUseCase = getCommentsByIdImageFromDbUseCase,
     )
 }
