@@ -97,6 +97,7 @@ class ImageDetailFragment : Fragment() {
                     text = binding.etComment.text.toString()
                 )
                 viewModel.sendComment(comment)
+                binding.etComment.setText("")
             }
         }
     }

@@ -15,7 +15,6 @@ import ed.maevski.testbalinasoft.utils.toJpeg
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-
 /**** Вынести маппер в отдельный модуль*/
 class ImageRepository(
     private val imagesDao: ImagesDao,
@@ -112,7 +111,7 @@ class ImageRepository(
             ImageEntity(
                 id = it.id,
                 url = it.url,
-                date = it.date,
+                date = it.date*1000,
                 lat = it.lat,
                 lng = it.lng
             )

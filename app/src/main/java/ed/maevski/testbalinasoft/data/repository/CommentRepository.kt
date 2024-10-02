@@ -48,7 +48,7 @@ class CommentRepository(
             if (response.data.isNotEmpty()) {
                 val listId = withContext(Dispatchers.IO) {
                     commentsDao.trunc(imageId)
-                    commentsDao.insertAll(mapperImagesDtoOutToImagesEntity(response.data, imageId))
+                    commentsDao.insertAll(mapperCommentDtoOutToCommentEntity(response.data, imageId))
                 }
                 count = listId.size
             }
@@ -77,7 +77,7 @@ class CommentRepository(
         )
     }
 
-    private fun mapperImagesDtoOutToImagesEntity(
+    private fun mapperCommentDtoOutToCommentEntity(
         listCommentDtoOut: List<CommentDtoOut>,
         imageId: Int
     ): List<CommentEntity> {

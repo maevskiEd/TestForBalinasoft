@@ -48,7 +48,7 @@ class ImageDetailViewModel(
 
     fun sendComment(comment: Comment) {
         viewModelScope.launch {
-            sendCommentUseCase(comment)
+            if (sendCommentUseCase(comment)) getComments(imageId)
         }
     }
 
